@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  </head>
+  <body>
+    {%include 'navbar.html'%}
+
+    <div class="answer-div">
+      <ul class="answer-el"></ul>
+      <a href="http://"></a>
+    </div>
+    <script>
+      $(document).ready(function () {
+        setInterval(function () {
+          $.ajax({
+            type: "GET",
+            url: "{% url 'getAns' %}",
+            success: function (response) {
+              //   console.log(response.ans);
+              $(".answer-el").empty();
+              for (key in response.ans) {
+                // console.log(response.ans[key].username);
+                if (response.ans[key].qno == {{pk}}){
+                    let temp = "<li>" +"<a href=" + "/answer/"+response.ans[key].id+'>' + "Username: "+ response.ans[key].username + " Question No: "+response.ans[key].qno+ "</a>"+"</li>";
+                    $(".answer-el").prepend(temp);}
+              }
+            },
+            error: function (response) {
+              alert("Error Occured ");
+            },
+          });
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
