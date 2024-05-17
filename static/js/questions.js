@@ -27,8 +27,14 @@ let editorLib = {
     // Set Default Code
     def_code = "#Dont edit this line of code\n";
     if (questionNo == 1) {
-      codeEditor.setValue(def_code + "input_data = eval(input())");
+      // codeEditor.setValue(def_code + "input_data = eval(input())");
+      def_code += "input_data = eval(input())"
     }
+    else if (questionNo == 2) {
+      // codeEditor.setValue(def_code + "input_data = eval(input())");
+      def_code += "input_data = eval(input())"
+    }
+    codeEditor.setValue(def_code);
   },
 };
 

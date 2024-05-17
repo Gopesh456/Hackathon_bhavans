@@ -3,7 +3,10 @@ import subprocess
 correct_outputs: dict = {
     1.1: "1\n2\n3\n4\n",
     1.2: "4\n1\n2\n5\n",
-    1.3: "7\n8\n6\n"
+    1.3: "7\n8\n6\n",
+    2.1: 'olleh\n',
+    2.2: 'nohtyp\n',
+    2.3: 'olleh nohtyp\n',
 }
 
 class PythonChecker:
@@ -52,4 +55,4 @@ class PythonChecker:
 if __name__ == "__main__":
     TEAM_CODE_MOCK = "AAAAAA"
     PyChecker = PythonChecker(True)
-    print(PyChecker.check_python_file(1.2,'test.py'))
+    # print(PyChecker.check_python_file(1.2,'test.py'))
