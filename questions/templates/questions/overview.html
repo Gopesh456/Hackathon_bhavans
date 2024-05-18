@@ -31,7 +31,7 @@
     <div class="container-cos">
       <table class="table-el  table table-sm table-dark table-striped table-hover center" id="table-width">
         <thead class="table-dark">
-        <tr><th id="head-q">Questions</th><th id="head-res"><div class="head-con">Results</div></th></tr>
+        <tr><th id="head-q">Questions</th><th id="head-res"><div class="head-con">Results</div></th><th id="head-res"><div class="head-con">Points</div></th></tr>
         </thead>
         <tr>
           <td class="ques1 ques " id = "test">
@@ -39,6 +39,9 @@
           </td>
           <td class="result"><div class="res">
             {{1_QE}}
+          </div></td>
+          <td class="result"><div class="pts">
+            {{1_P}}
           </div></td>
         </tr>
         <tr>
@@ -48,6 +51,9 @@
           <td class="result"><span class="res">
             {{2_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{2_P}}
+          </span></td>
         </tr>
         <tr>
           <td class="ques3 ques">
@@ -56,6 +62,8 @@
           <td class="result"><span class="res">
             {{3_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{3_P}} </span></td>
         </tr>
         <tr>
           <td class="ques4 ques">
@@ -64,6 +72,8 @@
           <td class="result"><span class="res">
             {{4_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{4_P}} </span></td>
         </tr>
         <tr>
           <td class="ques5 ques">
@@ -72,6 +82,8 @@
           <td class="result"><span class="res">
             {{5_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{5_P}} </span></td>
         </tr>
         <tr>
           <td class="ques6 ques">
@@ -80,6 +92,8 @@
           <td class="result"><span class="res">
             {{6_QE}}
           </span></td>
+          <td class="result"><span class="res pts">
+            {{6_P}} </span></td>
         </tr>
         <tr>
           <td class="ques7 ques">
@@ -88,6 +102,8 @@
           <td class="result"><span class="res">
             {{7_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{7_P}} </span></td>
         </tr>
         <tr>
           <td class="ques8 ques">
@@ -96,6 +112,8 @@
           <td class="result"><span class="res">
             {{8_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{8_P}} </span></td>
         </tr>
         <tr>
           <td class="ques9 ques">
@@ -104,6 +122,8 @@
           <td class="result"><span class="res">
             {{9_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{9_P}} </span></td>
         </tr>
         <tr>
           <td class="ques10 ques">
@@ -112,9 +132,27 @@
           <td class="result"><span class="res">
             {{10_QE}}
           </span></td>
+          <td class="result"><span class="pts">
+            {{10_P}}
+          </span></td>
+        </tr>
+        <tr>
+          <td class="ques1 ques " id = "test">
+            <span class="links"><b>Total Points</b></span>
+          </td>
+          <td class="result"><span class="res">
+          </span></td>
+          <td class="result"><span class="res" id = "totalPoints">
+            
+          </span></td>
         </tr>
       </table>
     </div>
-    <script src="{%static 'js/overviw_.js'%}"></script>
+    <script src="{%static 'js/overviw_.js'%}">
+    </script>
+    <script>
+      console.log("Hello");
+
+    </script>
   </body>
 </html>

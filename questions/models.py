@@ -21,6 +21,7 @@ class answer(models.Model):
     qno = models.CharField(max_length = 2)
     username = models.CharField(max_length= 100)
     create = models.TimeField(datetime.time)
+    points = models.IntegerField(default = 0)
     id = models.AutoField(primary_key=True,unique=True)
     def __str__(self):
         return self.username + " Question No: "+ str(self.qno)

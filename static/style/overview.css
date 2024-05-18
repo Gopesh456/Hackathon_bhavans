@@ -55,7 +55,7 @@ td{
   /*padding-left: 50px;*/
   border:none;
 }
-.res{
+.res,.pts{
   font-family: 'montserrat', sans-serif;
   font-weight: bold;
   height: 3vh;
