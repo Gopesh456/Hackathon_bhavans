@@ -16,6 +16,7 @@ class PythonChecker:
     
     def __init__(self, debug: bool = False):
       self._debug = debug
+      self.last_output = None
     
     def run_python_file(self, file_path: str, args: list = []):
         try:
@@ -86,6 +87,13 @@ class PythonChecker:
             elif f"from {module}" in code_data:
                 return False # Malice detected
         return True # Safe
+    
+    def get_output(self, file_path: str, user_input: list) -> str:
+        if self.is_not_malice(file_path):
+            return self.run_python_file(file_path, user_input)
+        else:
+            return "You can not use any modules in this section of the hackathon."
+        
         
     
 # For testing purposes
