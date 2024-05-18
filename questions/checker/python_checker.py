@@ -37,7 +37,6 @@ class PythonChecker:
             f.write(program_code)
         try:
             output = self.run_python_file(file_path, args)
-            print("|||||||||||||||||||||||||", output, "|||||||||||||||||||||||||", sep='\n')
             return output == self.get_correct_output(question_index)
         except Exception as e:
             if self._debug: print(f"Error occured while running {file_path}:\n", e)
