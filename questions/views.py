@@ -32,12 +32,12 @@ def questions(req,pk):
         pyChecker = pyC.PythonChecker(True)
         file_name = 'Answer/'+str(ans_a.qno)+'/'+current_username+"@"+current_time+".py"
         with open(file_name,'w+') as f:
-            f.write(ans_q.ans)
+            f.write(ans_q.ans) # type: ignore
         correct = False
         if pk == '1':
-            result1_1 = pyChecker.check_python_file(1.1,file_name,['1234'])
-            result1_2 = pyChecker.check_python_file(1.2,file_name,['4125'])
-            result1_3 = pyChecker.check_python_file(1.3,file_name,['786'])
+            result1_1 = pyChecker.check_python_file(1.1,file_name,['1234'], current_username)
+            result1_2 = pyChecker.check_python_file(1.2,file_name,['4125'], current_username)
+            result1_3 = pyChecker.check_python_file(1.3,file_name,['786'], current_username)
             if result1_1 and result1_2 and result1_3:
                 correct = True
                 print(result1_1, result1_2,result1_3)
