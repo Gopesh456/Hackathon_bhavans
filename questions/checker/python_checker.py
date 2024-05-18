@@ -19,6 +19,9 @@ class PythonChecker:
       self.last_output = None
     
     def run_python_file(self, file_path: str, args: list = []):
+        '''
+        Run the python file at given file_path with specified args and returns the output. Does not check for malice
+        '''
         try:
             output = subprocess.check_output(['python', file_path] + args, stderr=subprocess.STDOUT, universal_newlines=True)
             if self._debug: print(f"Output generated from {file_path} is:\n\n", output, sep = "")
@@ -29,6 +32,9 @@ class PythonChecker:
     
 
     def is_correct_output(self, team_code, question_index: int, program_code: str, args: list = []):
+        '''
+        (UNNECESSARY FUNCTION)
+        '''
         file_path = f'team_codes/{team_code}-{question_index}.py'
         if self._debug:
             print("--------------- Team code:", team_code, question_index, "---------------")
@@ -43,6 +49,9 @@ class PythonChecker:
             return False
 
     def get_correct_output(self, question_index: int):
+        '''
+        Returns the correct output for th given question index
+        '''
         return correct_outputs[question_index]
 
     def check_python_file(self, question_index: int, file_path: str, args = []) -> bool:
@@ -88,6 +97,9 @@ class PythonChecker:
         return True # Safe
     
     def get_output(self, file_path: str, user_input: list) -> str:
+        '''
+        Run the python file at given file_path with specified args and returns the output. Checks for malice as well.
+        '''
         if self.is_not_malice(file_path):
             return self.run_python_file(file_path, user_input)
         else:
