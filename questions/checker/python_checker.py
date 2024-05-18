@@ -1,4 +1,7 @@
 import subprocess
+from datetime import datetime
+import json
+import threading
 
 correct_outputs: dict = {
     1.1: "1\n2\n3\n4\n",
@@ -14,21 +17,25 @@ allowed_modules = ['sys'] # NEVER SET IT TO ['']
 
 class PythonChecker:
     
-    def __init__(self, debug: bool = False):
+    def __init__(self, debug: bool = False, logging: bool = True):
       self._debug = debug
-      self.last_output = None
-    
-    def run_python_file(self, file_path: str, args: list = []):
+      self._logging = logging
+
+
+    def run_python_file(self, file_path: str, args: list = [], question_index: int = 0, username: str = "TEST"):
         '''
         Run the python file at given file_path with specified args and returns the output. Does not check for malice
         '''
         try:
             output = subprocess.check_output(['python', file_path] + args, stderr=subprocess.STDOUT, universal_newlines=True)
             if self._debug: print(f"Output generated from {file_path} is:\n\n", output, sep = "")
-            return output
         except subprocess.CalledProcessError as e:
             if self._debug: print(f"Error generated from {file_path} is:\n\n", e.output, sep = "")
-            return e.output
+            output = e.output
+            
+        if self._logging: self.log_data(file_path, output, args, int(question_index), username)   
+        
+        return output
     
 
     def is_correct_output(self, team_code, question_index: int, program_code: str, args: list = []):
@@ -48,13 +55,15 @@ class PythonChecker:
             if self._debug: print(f"Error occured while running {file_path}:\n", e)
             return False
 
+
     def get_correct_output(self, question_index: int):
         '''
         Returns the correct output for th given question index
         '''
         return correct_outputs[question_index]
 
-    def check_python_file(self, question_index: int, file_path: str, args = []) -> bool:
+
+    def check_python_file(self, question_index: int, file_path: str, args = [], username: str = "TESTNAME") -> bool:
         '''
         Checks whether the given file returns the correct output or not.
         Order of events:
@@ -72,7 +81,8 @@ class PythonChecker:
                 return False
         else:
             return False
-    
+
+
     def is_not_malice(self, file_path: str) -> bool:
         '''
         Checks if the file contains illegal modules
@@ -95,22 +105,45 @@ class PythonChecker:
             elif f"from {module}" in code_data:
                 return False # Malice detected
         return True # Safe
-    
-    def get_output(self, file_path: str, user_input: list) -> str:
+
+
+    def get_output(self, file_path: str, user_input: list = [], team_code: str = None) -> str:
         '''
         Run the python file at given file_path with specified args and returns the output. Checks for malice as well.
         '''
         if self.is_not_malice(file_path):
-            return self.run_python_file(file_path, user_input)
+            output = self.run_python_file(file_path, user_input)
+            return output
         else:
             return "You can not use any modules in this section of the hackathon."
-        
-        
-    
+
+
+    def log_data(self, file_path: str, output: str, user_input: list = [], question_index: int = 0, username: str = "TEST"):
+        with open(f"log_{question_index}.ipynb") as log_file:
+            data = json.load(log_file)
+            # print(json.dumps(data, indent=2))
+            cell_data = {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [{
+                    "name": "stdout",
+                    "output_type": "stream",
+                    "text": [output]
+                    }],
+                "source": [f'# Time: {str(datetime.now())} for username: {username}'].extend(open(file_path).read().split('\n'))
+            }
+            # print(open(file_path).read().split('\n'))
+            data['cells'].append(cell_data)
+            print(cell_data)
+        with open(f"log_{question_index}.ipynb", "w") as log_file:
+            json.dump(data, log_file)
+
 # For testing purposes
 # Mock Usage in Final Code
 # from python.python_checker import PythonChecker
 if __name__ == "__main__":
     TEAM_CODE_MOCK = "AAAAAA"
     PyChecker = PythonChecker(True)
-    print(PyChecker.check_python_file(1.2,'test.py'))
+    # print(PyChecker.check_python_file(1.2,'test.py'))
+    # PyChecker.log_data("", "")
