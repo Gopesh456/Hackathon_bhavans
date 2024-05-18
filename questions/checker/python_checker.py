@@ -10,7 +10,7 @@ correct_outputs: dict = {
 }
 
 illegal_modules = [''] # Empty list allows all modules, [''] disables all modules
-allowed_modules = ['sys']
+allowed_modules = ['sys'] # NEVER SET IT TO ['']
 
 class PythonChecker:
     
@@ -71,8 +71,10 @@ class PythonChecker:
         try:
             with open(file_path) as code:
                 code_data = code.read()
-                code_data = code_data.replace("import sys", "")
-                code_data = code_data.replace("input_data = eval(sys.argv[1])", "")
+                for module in allowed_modules:
+                    code_data = code_data.replace(f"import {module}", "", 1)
+                code_data = code_data.replace("input_data = eval(sys.argv[1])", "", 1)
+                code_data = code_data.replace("del sys", "", 1)
         except OSError as e:
             if self._debug: print("Error while opening file when checking malice: ", e)
             return True # Technically True as file might not exist

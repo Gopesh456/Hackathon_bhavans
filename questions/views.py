@@ -18,9 +18,9 @@ def questions(req,pk):
         ans_q = Questions.objects.get(qno = pk)
         current_username = req.user.username
         if pk =='1':
-            ans_q.ans = userAns.replace("input_data = eval(input())","import sys\ninput_data = eval(sys.argv[1])")
+            ans_q.ans = userAns.replace("input_data = eval(input())","import sys\ninput_data = eval(sys.argv[1])\ndel sys")
         elif pk =='2':
-            ans_q.ans = userAns.replace("input_data = eval(input())","import sys\ninput_data = eval(sys.argv[1])")
+            ans_q.ans = userAns.replace("input_data = eval(input())","import sys\ninput_data = eval(sys.argv[1])\ndel sys")
         ans_q.save()
         ans_a = answer(username = current_username,ans = userAns)
         ans_a.qno = pk
