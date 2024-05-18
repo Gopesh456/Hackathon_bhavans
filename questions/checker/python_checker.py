@@ -63,7 +63,7 @@ class PythonChecker:
         return correct_outputs[question_index]
 
 
-    def check_python_file(self, question_index: int, file_path: str, args = [], username: str = "TESTNAME") -> bool:
+    def check_python_file(self, question_index: float, file_path: str, args = [], username: str = "TESTNAME") -> bool:
         '''
         Checks whether the given file returns the correct output or not.
         Order of events:
@@ -75,7 +75,7 @@ class PythonChecker:
         if self.is_not_malice(file_path):
             try:
                 output = self.run_python_file(file_path, args)
-                return output == self.get_correct_output(question_index)
+                return output == self.get_correct_output(int(question_index))
             except Exception as e:
                 if self._debug: print(f"Error occurred while running {file_path}:\n", e)
                 return False
@@ -107,12 +107,12 @@ class PythonChecker:
         return True # Safe
 
 
-    def get_output(self, file_path: str, user_input: list = [], team_code: str = None) -> str:
+    def get_output(self, question_index: float, file_path: str, user_input = [], username: str = "TESTNAME") -> str:
         '''
         Run the python file at given file_path with specified args and returns the output. Checks for malice as well.
         '''
         if self.is_not_malice(file_path):
-            output = self.run_python_file(file_path, user_input)
+            output = self.run_python_file(file_path, user_input, int(question_index), username)
             return output
         else:
             return "You can not use any modules in this section of the hackathon."
