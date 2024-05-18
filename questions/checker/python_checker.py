@@ -9,6 +9,9 @@ correct_outputs: dict = {
     2.3: 'olleh nohtyp\n',
 }
 
+illegal_modules = [''] # Empty list allows all modules, [''] disables all modules
+allowed_modules = ['sys']
+
 class PythonChecker:
     
     def __init__(self, debug: bool = False):
@@ -33,6 +36,7 @@ class PythonChecker:
             f.write(program_code)
         try:
             output = self.run_python_file(file_path, args)
+            print("|||||||||||||||||||||||||", output, "|||||||||||||||||||||||||", sep='\n')
             return output == self.get_correct_output(question_index)
         except Exception as e:
             if self._debug: print(f"Error occured while running {file_path}:\n", e)
@@ -41,13 +45,46 @@ class PythonChecker:
     def get_correct_output(self, question_index: int):
         return correct_outputs[question_index]
 
-    def check_python_file(self, question_index: int, file_path: str, args = []):
-        try:
-            output = self.run_python_file(file_path, args)
-            return output == self.get_correct_output(question_index)
-        except Exception as e:
-            if self._debug: print(f"Error occured while running {file_path}:\n", e)
+    def check_python_file(self, question_index: int, file_path: str, args = []) -> bool:
+        '''
+        Checks whether the given file returns the correct output or not.
+        Order of events:
+            1. Checking Malice
+            2. Trying to run the python file
+                i. if executed correctly, returns whether the output was correct or wrong
+                ii. if python file fails to execute, returns false
+        '''
+        if self.is_not_malice(file_path):
+            try:
+                output = self.run_python_file(file_path, args)
+                return output == self.get_correct_output(question_index)
+            except Exception as e:
+                if self._debug: print(f"Error occurred while running {file_path}:\n", e)
+                return False
+        else:
             return False
+    
+    def is_not_malice(self, file_path: str) -> bool:
+        '''
+        Checks if the file contains illegal modules
+        '''
+        try:
+            with open(file_path) as code:
+                code_data = code.read()
+                code_data = code_data.replace("import sys", "")
+                code_data = code_data.replace("input_data = eval(sys.argv[1])", "")
+        except OSError as e:
+            if self._debug: print("Error while opening file when checking malice: ", e)
+            return True # Technically True as file might not exist
+        for module in illegal_modules:
+            if f"import {module}" in code_data:
+                if self._debug:
+                    print(code_data)
+                return False # Malice detected
+            elif f"from {module}" in code_data:
+                return False # Malice detected
+        return True # Safe
+        
     
 # For testing purposes
 # Mock Usage in Final Code
@@ -55,4 +92,4 @@ class PythonChecker:
 if __name__ == "__main__":
     TEAM_CODE_MOCK = "AAAAAA"
     PyChecker = PythonChecker(True)
-    # print(PyChecker.check_python_file(1.2,'test.py'))
+    print(PyChecker.check_python_file(1.2,'test.py'))
