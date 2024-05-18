@@ -1,5 +1,6 @@
+from re import T
 from django.shortcuts import render, redirect
-from .models import Questions,answer
+from .models import Questions,answer,TotalPoints
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -56,7 +57,7 @@ def questions(req,pk):
         if correct:
             print("correct")
             ans_a.Result = 'Correct' 
-            starttime = datetime(now.year, now.month, now.day, 22)  
+            starttime = datetime(now.year, now.month, now.day, 12)  
             time_difference = now - starttime
             seconds = time_difference.total_seconds()
             points = seconds // 180 
@@ -80,7 +81,9 @@ def getques(req):
     questions = Questions.objects.all()
     return JsonResponse({'question':list(questions.values())})
 
-@login_required(login_url='login')
+
+
+@login_required(login_url='login')  
 def overview(req):
     
     context = {
@@ -118,17 +121,25 @@ def overview(req):
         '9_P' : '0',
         '10_P' : '0',
     }
+    totalPoints = 0
 
     for i in range(1,11):
         key = str(i)+'_QE'
         if context[key]:
-            context2[key] = answer.objects.filter(username = req.user.username, qno = i).last().Result
+            context2[key] = answer.objects.filter(username = req.user.username, qno = i).last().Result # type: ignore
             key2 = str(i)+'_P'
             context2[key2] = answer.objects.filter(username = req.user.username, qno = i).last().points # type: ignore
         else:
             pass
-
-
+    for i in context2.values():
+        if str(i).isdigit():
+            totalPoints += int(i)
+    context2['points'] = str(totalPoints)
+    current_username = req.user.username
+    pointsDB = TotalPoints.objects.get(username = current_username)
+    pts = context2['points']
+    pointsDB.points = int(pts)
+    pointsDB.save()
     return render(req,'questions/overview.html',context2)
 
-    
+
