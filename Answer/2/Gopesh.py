@@ -3,4 +3,5 @@ import sys
 input_data = eval(sys.argv[1])
 del sys
 st = str(input_data)
-print(st[::-1])
+print(st[::-1])
+#code edited

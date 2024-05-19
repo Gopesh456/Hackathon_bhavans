@@ -2,5 +2,8 @@
 import sys
 input_data = eval(sys.argv[1])
 del sys
-for i in str(input_data):
-    print(i)
+
+st = str(input_data)
+for i in st:
+    print(i)
+    #code edited on share
