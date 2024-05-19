@@ -8,4 +8,6 @@ urlpatterns = [
     path('question/<str:pk>/',views.questions, name='question'),
     path('getquestions/',views.getques,name = "getquestions"),
     path('questions/',views.overview,name = "questions"),
+    path('getpoints/',views.getPoints,name = "getpoints"),
+    path('getresults/',views.getResults,name = "getresults"),
 ]

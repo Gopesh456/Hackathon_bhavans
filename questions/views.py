@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime,timedelta
 import questions.checker.python_checker as pyC
+from threading import Timer
 # Create your views here.
 
 @login_required(login_url='login')
@@ -30,7 +31,7 @@ def questions(req,pk):
         now = datetime.now()
         current_time = str(now.strftime("%H_%M_%S"))
         pyChecker = pyC.PythonChecker(True)
-        file_name = 'Answer/'+str(ans_a.qno)+'/'+current_username+"@"+current_time+".py"
+        file_name = 'Answer/'+str(ans_a.qno)+'/'+current_username+".py"
         with open(file_name,'w+') as f:
             f.write(ans_q.ans) # type: ignore
         correct = False
@@ -57,7 +58,7 @@ def questions(req,pk):
         if correct:
             print("correct")
             ans_a.Result = 'Correct' 
-            starttime = datetime(now.year, now.month, now.day, 12)  
+            starttime = datetime(now.year, now.month, now.day,10)  
             time_difference = now - starttime
             seconds = time_difference.total_seconds()
             points = seconds // 180 
@@ -81,8 +82,37 @@ def getques(req):
     questions = Questions.objects.all()
     return JsonResponse({'question':list(questions.values())})
 
+def getPoints(req):
+    ptsLi = []
+    for i in range(1,11) :
+        try:
+            pts= answer.objects.filter(username = req.user.username, qno = str(i)).last().points  #type: ignore  
+        except:
+            pts = 0
+        ptsLi.append(pts)
+    return JsonResponse({'points':ptsLi}) 
 
+def getResults(req):
+    resLi = []
+    for i in range(1,11) :
+        try:
+            res= answer.objects.filter(username = req.user.username, qno = str(i)).last().Result # type: ignore   
+        except:
+            res = '-'
+        resLi.append(res)
+    return JsonResponse({'results':resLi})
 
+def updatingTotalPoints(req):
+    current_username = req.user.username
+    pointsDB = TotalPoints.objects.get(username = current_username)
+    pts = 0
+    for i in range(1,11):
+        try:
+            pts += answer.objects.filter(username = req.user.username, qno = str(i)).last().points  #type: ignore  
+        except:
+            pass
+    pointsDB.points = int(pts)
+    pointsDB.save()
 @login_required(login_url='login')  
 def overview(req):
     
@@ -131,15 +161,8 @@ def overview(req):
             context2[key2] = answer.objects.filter(username = req.user.username, qno = i).last().points # type: ignore
         else:
             pass
-    for i in context2.values():
-        if str(i).isdigit():
-            totalPoints += int(i)
-    context2['points'] = str(totalPoints)
-    current_username = req.user.username
-    pointsDB = TotalPoints.objects.get(username = current_username)
-    pts = context2['points']
-    pointsDB.points = int(pts)
-    pointsDB.save()
+    
+    Timer(1000,updatingTotalPoints(req)).start()
     return render(req,'questions/overview.html',context2)
 
 
