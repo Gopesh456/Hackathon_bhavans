@@ -53,21 +53,12 @@
           <div id="editor">
           </div>
           <textarea  rows="1"id="output"></textarea>
+          <pre id="out"  style = "visibility: hidden"></pre>
       </div>
       </div>
       </div>
       <div class="container-custom">
-        <form method="POST" , id="form-el">
-          {% csrf_token %}
-          <textarea
-            name="textarea"
-            id="hiddenfield"
-            cols="1"
-            rows="1"
-            style="visibility: hidden"
-          ></textarea>
-          <button class="submit-btn" role="button" >Submit</button>
-        </form>
+        <button class="submit-btn" role="button" > <a onclick="checkAnswer()">Submit</a></button>
       </div>
 
  <script>
@@ -85,14 +76,6 @@
                 },
             });
         }, 1000); // Changed from 100 to 5000
-        $(function () {
-            $(".submit-btn").on("click", function () {
-                const userCode = editor.getValue();
-                saveCodeSubmit();
-                $("#hiddenfield").val(userCode);
-                $("form#form-el").submit();
-            });
-        });
     });
 </script>
 <script src="{%static 'js/questions.js'%}"></script>

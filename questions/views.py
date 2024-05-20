@@ -9,6 +9,14 @@ import questions.checker.python_checker as pyC
 from threading import Timer
 # Create your views here.
 
+
+
+@login_required(login_url='login')
+def get_result(req):
+     if req.method == 'POST':
+        res = req.POST['result']
+        ans_a = answer(username = current_username,ans = userAns)
+
 @login_required(login_url='login')
 def questions(req,pk):
     context = {

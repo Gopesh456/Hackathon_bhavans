@@ -48,7 +48,83 @@ function main() {
   mypre.style.display = 'block';
   editor.resize()
 }
+function outfr(text) {
+  var mypre = document.getElementById("out");
+  mypre.innerHTML = mypre.innerHTML + text;
+}
+function checkit(input) {
+  var prog = editor.getValue();
+  let codeli = prog.split("\n")
+  for (i in codeli){
+    if (codeli[i].includes('input')){
+      codeli[i] = codeli[i].replaceAll(' ','')
+      codeli[i] = codeli[i].replace('=input()', input[0])
+    }
+  }
+  let code = codeli.join('\n')
+  var mypre = document.getElementById("out");
+  mypre.innerHTML = '';
+  Sk.pre = "out";
+  Sk.configure({output:outfr, read:builtinRead});
+  (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+  var myPromise = Sk.misceval.asyncToPromise(function() {
+    return Sk.importMainWithBody("<stdin>", false, code, true);
+  });
+  // const finalOutput;
+  myPromise.then(function(mod) {
+      console.log('success');
 
+    },
+    function(err) {
+      console.log(err.toString());
+      // mypre.innerText = err.toString();
+      // finalOutput=  err.toString();
+    });
+    return mypre.innerHTML
+}
+function checkAns(){
+  let inputs ={q1_1: ['="hello"'],q1_2: ['="bye"'],q1_3: ['="4567"']}
+  let ans = []
+  if (questionNo == 1){
+    for (let i=1; i <=3 ; i++){
+      var ans1 = checkit(inputs['q1_'+i])
+      ans.push(ans1)
+  }}
+  else if (questionNo == 2){
+    for (let i=1; i <=3 ; i++){
+      var ans1 = checkit(inputs['q1_'+i])
+      ans.push(ans1)
+  }}
+  return ans
+}
+
+function checkAnswer(){
+  let ans = checkAns()
+  let correct = [['h\ne\nl\nl\no\n', 'b\ny\ne\n', '4\n5\n6\n7\n'],['olleh\n', 'eyb\n', '7654\n']]
+  if (JSON.stringify(ans) == JSON.stringify(correct[questionNo-1])){
+    return "Correct"}
+  else{
+    return "Incorrect"}
+
+
+
+}
+
+function sendResult() { 
+  var value = checkAnswer(); 
+  $.ajax({ 
+      url: '/getResults', 
+      type: 'POST', 
+      contentType: 'application/json', 
+      data: JSON.stringify({ 'value': value }), 
+      success: function(response) { 
+          console.log('Success Sent'); 
+      }, 
+      error: function(error) { 
+          console.log(error); 
+      } 
+  }); 
+} 
 function openFile() {
   var files = input.files;
   if (files.length == 0) return;
