@@ -88,10 +88,19 @@ def homepage(req):
     return render(req,'index.html')
 def getCorrect(req):
     current_username = req.user.username
+    now = datetime.now()
     ans_a = answer(username = current_username,ans = req.POST['code'])
     ans_a.qno = req.POST['qno']
     ans_a.create = datetime.now()
     ans_a.Result = req.POST['result']
+    if ans_a.Result == 'Correct':
+        starttime = datetime(now.year, now.month, now.day,13)  
+        time_difference = now - starttime
+        seconds = time_difference.total_seconds()
+        points = seconds // 180 
+        points *=10
+        ans_a.points =int(400 - points)
+        ans_a.save()
     ans_a.save()
     # print(req.POST['result'])
     return redirect('/questions/') 
