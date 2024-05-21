@@ -18,71 +18,7 @@ from threading import Timer
 def questions(req,pk):
     context = {
         'pk': str(pk),
-        'result': 'not working',
-        'output': '',
     }
-    if req.method == 'POST':
-        userAns = req.POST['textarea']
-        ans_q = Questions.objects.get(qno = pk)
-        current_username = req.user.username
-        if pk =='1':
-            ans_q.ans = userAns.replace("input_data = input()","import sys\ninput_data = eval(sys.argv[1])\ndel sys")
-        elif pk =='2':
-            ans_q.ans = userAns.replace("input_data = input()","import sys\ninput_data = eval(sys.argv[1])\ndel sys")
-        ans_q.save()
-        ans_a = answer(username = current_username,ans = userAns)
-        ans_a.qno = pk
-        ans_a.create = datetime.now()
-        print(ans_q.ans)
-        now = datetime.now()
-        current_time = str(now.strftime("%H_%M_%S"))
-        pyChecker = pyC.PythonChecker(True)
-        file_nameC = 'Answer/'+str(ans_a.qno)+'/'+current_username+".py"
-        with open(file_nameC,'w+') as f:
-            f.write(ans_q.ans) # type: ignore
-        correct = False
-        if pk == '1':
-            result1_1 = pyChecker.check_python_file(1.1,file_nameC,['1234'], current_username)
-            result1_2 = pyChecker.check_python_file(1.2,file_nameC,['4125'], current_username)
-            result1_3 = pyChecker.check_python_file(1.3,file_nameC,['786'], current_username)
-            if result1_1 and result1_2 and result1_3:
-                correct = True
-                print(result1_1, result1_2,result1_3)
-            else:
-                correct = False
-                print(result1_1, result1_2,result1_3)
-        elif pk == '2':
-            result2_1 = pyChecker.check_python_file(2.1,file_nameC,['"hello"'])
-            result2_2 = pyChecker.check_python_file(2.2,file_nameC,['"python"'])
-            result2_3 = pyChecker.check_python_file(2.3,file_nameC,['"python hello"'])
-            if result2_1 and result2_2 and result2_3:
-                correct = True
-                print(result2_1, result2_2,result2_3)
-            else:
-                correct = False
-                print(result2_1, result2_2,result2_3)
-        if correct:
-            print("correct")
-            ans_a.Result = 'Correct' 
-            context['result'] = "Correct"
-            print(context['result'])
-            starttime = datetime(now.year, now.month, now.day,14)  
-            time_difference = now - starttime
-            seconds = time_difference.total_seconds()
-            points = seconds // 180 
-            print(points)
-            points *=10
-            ans_a.points =int(400 - points)
-            ans_a.save()
-            return redirect('/questions/')  
-
-        elif not correct:
-            print("wrong")
-            ans_a.Result = 'Incorrect'
-            context['result'] = "Incorrect"
-            ans_a.save()       
-            return redirect('/questions/') 
-
     return render(req,'questions/index.html',context)
 
 def homepage(req):
