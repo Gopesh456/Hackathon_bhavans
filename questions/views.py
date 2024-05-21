@@ -1,7 +1,9 @@
+from email.policy import HTTP
 from re import T
+import re
 from django.shortcuts import render, redirect
 from .models import Questions,answer,TotalPoints
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime,timedelta
@@ -11,11 +13,6 @@ from threading import Timer
 
 
 
-@login_required(login_url='login')
-def get_result(req):
-     if req.method == 'POST':
-        res = req.POST['result']
-        ans_a = answer(username = current_username,ans = userAns)
 
 @login_required(login_url='login')
 def questions(req,pk):
@@ -89,7 +86,24 @@ def questions(req,pk):
 
 def homepage(req):
     return render(req,'index.html')
-
+def getCorrect(req):
+    current_username = req.user.username
+    now = datetime.now()
+    ans_a = answer(username = current_username,ans = req.POST['code'])
+    ans_a.qno = req.POST['qno']
+    ans_a.create = datetime.now()
+    ans_a.Result = req.POST['result']
+    if ans_a.Result == 'Correct':
+        starttime = datetime(now.year, now.month, now.day,13)  
+        time_difference = now - starttime
+        seconds = time_difference.total_seconds()
+        points = seconds // 180 
+        points *=10
+        ans_a.points =int(400 - points)
+        ans_a.save()
+    ans_a.save()
+    # print(req.POST['result'])
+    return redirect('/questions/') 
 def getConsoleOutput(req):
     pass
 
