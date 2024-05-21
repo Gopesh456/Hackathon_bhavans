@@ -72,7 +72,7 @@ function checkit(input) {
   });
   // const finalOutput;
   myPromise.then(function(mod) {
-      // console.log('success');
+      console.log('success');
 
     },
     function(err) {
@@ -111,23 +111,19 @@ function checkAnswer(){
 }
 
 function sendResult() { 
-  var value = checkAnswer();
-  var userCode = editor.getValue();
-  console.log(value)
-  var csrftoken = '{{ csrf_token }}' 
-  const requestObj = new XMLHttpRequest();
-  requestObj.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      window.location.href = "/questions/";
-    }
-  }
-  requestObj.open("POST", "/post_correct/", true);
-  requestObj.setRequestHeader("X-CSRFToken", csrftoken);
-  formData = new FormData();
-  formData.append("result", value);
-  formData.append("qno", questionNo);
-  formData.append("code", userCode);
-  requestObj.send(formData);
+  var value = checkAnswer(); 
+  $.ajax({ 
+      url: '/getResults', 
+      type: 'POST', 
+      contentType: 'application/json', 
+      data: JSON.stringify({ 'value': value }), 
+      success: function(response) { 
+          console.log('Success Sent'); 
+      }, 
+      error: function(error) { 
+          console.log(error); 
+      } 
+  }); 
 } 
 function openFile() {
   var files = input.files;
