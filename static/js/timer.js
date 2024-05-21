@@ -3,7 +3,7 @@ let mins_el = document.querySelector('#mins')
 let secs_el = document.querySelector('#secs')
 function timeleft() {
     let date = new Date()
-    const starttime = 13*3600
+    const starttime = 19*3600
     let seconds = date.getSeconds()
     let mins = date.getMinutes() *60
     let hours = date.getHours() *3600

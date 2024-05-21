@@ -66,10 +66,11 @@ def questions(req,pk):
             ans_a.Result = 'Correct' 
             context['result'] = "Correct"
             print(context['result'])
-            starttime = datetime(now.year, now.month, now.day,13)  
+            starttime = datetime(now.year, now.month, now.day,14)  
             time_difference = now - starttime
             seconds = time_difference.total_seconds()
             points = seconds // 180 
+            print(points)
             points *=10
             ans_a.points =int(400 - points)
             ans_a.save()
@@ -87,22 +88,26 @@ def questions(req,pk):
 def homepage(req):
     return render(req,'index.html')
 def getCorrect(req):
-    current_username = req.user.username
-    now = datetime.now()
-    ans_a = answer(username = current_username,ans = req.POST['code'])
-    ans_a.qno = req.POST['qno']
-    ans_a.create = datetime.now()
-    ans_a.Result = req.POST['result']
-    if ans_a.Result == 'Correct':
-        starttime = datetime(now.year, now.month, now.day,13)  
-        time_difference = now - starttime
-        seconds = time_difference.total_seconds()
-        points = seconds // 180 
-        points *=10
-        ans_a.points =int(400 - points)
-        ans_a.save()
-    ans_a.save()
-    # print(req.POST['result'])
+
+    checkExists =  answer.objects.filter(username = req.user.username, qno = str(req.POST['qno'])).exists()
+    if  not checkExists or answer.objects.filter(username = req.user.username, qno = req.POST['qno'] ).last().Result == 'Incorrect' :
+            current_username = req.user.username
+            now = datetime.now()
+            ans_a = answer(username = current_username,ans = req.POST['code'])
+            ans_a.qno = req.POST['qno']
+            ans_a.create = datetime.now()
+            ans_a.Result = req.POST['result']
+            if ans_a.Result == 'Correct':
+                starttime = datetime(now.year, now.month, now.day,19)  
+                time_difference = now - starttime
+                seconds = time_difference.total_seconds()
+                points = seconds // 180 
+                points *=10
+                ans_a.points =int(400 - points)
+                ans_a.save()
+            ans_a.save()
+    else:
+        pass
     return redirect('/questions/') 
 def getConsoleOutput(req):
     pass
@@ -142,6 +147,10 @@ def updatingTotalPoints(req):
             pass
     pointsDB.points = int(pts)
     pointsDB.save()
+
+
+def leaderboard(req):
+    return render(req,'questions/leaderboard.html')
 @login_required(login_url='login')  
 def overview(req):
     

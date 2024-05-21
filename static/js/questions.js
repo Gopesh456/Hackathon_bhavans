@@ -109,8 +109,12 @@ function checkAnswer(){
 
 
 }
-
+function saveCodeSubmit() {
+  localStorage[savefile] = editor.getValue();
+  window.alert("Submit code!")
+}
 function sendResult() { 
+  // console.log("working")s
   var value = checkAnswer();
   var userCode = editor.getValue();
   console.log(value)
@@ -128,6 +132,7 @@ function sendResult() {
   formData.append("qno", questionNo);
   formData.append("code", userCode);
   requestObj.send(formData);
+  saveCodeSubmit()
 } 
 function openFile() {
   var files = input.files;
@@ -160,10 +165,7 @@ function saveCode() {
   localStorage[savefile] = editor.getValue();
   window.alert("Code saved!")
 }
-function saveCodeSubmit() {
-  localStorage[savefile] = editor.getValue();
-  window.alert("Submit code!")
-}
+
 
 function downloadCode() {
   var prog = editor.getValue();
