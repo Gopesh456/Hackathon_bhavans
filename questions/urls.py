@@ -10,4 +10,6 @@ urlpatterns = [
     path('questions/',views.overview,name = "questions"),
     path('getpoints/',views.getPoints,name = "getpoints"),
     path('getresults/',views.getResults,name = "getresults"),
+    path('post_correct/',views.getCorrect,name = "post_correct"), # type: ignore
+    path('leaderboard/',views.leaderboard,name = "learderboard"), # type: ignore
 ]
