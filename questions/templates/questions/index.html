@@ -31,25 +31,29 @@
     {%include 'navbar.html'%}
     <div class="page">
       <div class="questionDiv user-select-none">
-        <div class="heading">
-          <h1 style="display: inline">Question</h1>
-          <h1 style="display: inline; padding-left: 5px" class="question_no">
+        <div style="visibility: hidden" class="heading">
+          <!-- <h1 style="display: inline">Question</h1> -->
+          <h1
+            style="display: inline; padding-left: 5px; visibility: hidden"
+            class="question_no"
+          >
             {{pk}}
           </h1>
         </div>
         <p id="question-el"></p>
+        <div style="height: 25px" class="footing"></div>
       </div>
       <div class="editor-container">
         <div id="wrapper">
           <div class="topnav" id="myTopnav">
-            <a onclick="main()">Run</a>
-            <input type="file" />
-            <a onclick="document.querySelector('input').click()">Open</a>
+            <a onclick="main()" class="runBtn">Run</a>
             <a onclick="toggleConsole()">Console</a>
             <a onclick="saveCode()">Save</a>
-            <a onclick="downloadCode()">Download</a>
             <a onclick="shareCode()">Share</a>
-            <a onclick="kbShortcuts()">Keyboard</a>
+            <a onclick="kbShortcuts()">Shortcuts</a>
+
+            <a class="submit-btn" onclick="sendResult()">Submit</a>
+
             <!-- <a onclick="aceSettings()">Settings</a> -->
           </div>
           <!-- <div id="editor"></div> -->
@@ -59,11 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="container-custom">
-      <button class="submit-btn" role="button">
-        <a onclick="sendResult()">Submit</a>
-      </button>
-    </div>
+    <div class="container-custom"></div>
 
     <script>
       $(document).ready(function () {
