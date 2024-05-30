@@ -34,7 +34,7 @@ def getCorrect(req):
             ans_a.create = datetime.now()
             ans_a.Result = req.POST['result']
             if ans_a.Result == 'Correct':
-                starttime = datetime(now.year, now.month, now.day,0)  
+                starttime = datetime(now.year, now.month, now.day,16,14)  
                 time_difference = now - starttime
                 seconds = time_difference.total_seconds()
                 points = seconds // 180 

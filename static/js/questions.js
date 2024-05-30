@@ -92,14 +92,19 @@ function checkit(input) {
 
   const matches = matchInputCalls(prog);
   for (i in codeli) {
-    for (j in matches)
-      if (codeli[i].includes(matches[j])) {
+    for (j in matches) {
+      if (codeli[i].includes("eval(" + matches[j] + ")")) {
+        codeli[i] = codeli[i]
+          .trim()
+          .replace("eval(" + matches[j] + ")", input[j]);
+      } else if (codeli[i].includes(matches[j])) {
         codeli[i] = codeli[i].trim().replace(matches[j], input[j]);
       }
+    }
   }
   // console.log(matches)
   let code = codeli.join("/n");
-  // console.log(code);
+  console.log(code);
   var mypre = document.getElementById("out");
   mypre.innerHTML = "";
   Sk.pre = "out";
@@ -121,7 +126,38 @@ function checkit(input) {
   return mypre.innerHTML;
 }
 function checkAns() {
-  let inputs = { q1_1: ['"hello"'], q1_2: ['"bye"'], q1_3: ['"4567"'] };
+  let inputs = {
+    q1_1: ['"()(()"'],
+    q1_2: ['"(()))())("'],
+    q1_3: ['"(()()"'],
+    q2_1: ['"ABBC"'],
+    q2_2: ['"java"'],
+    q2_3: ['"lol"'],
+    q3_1: ["[1,2,3]"],
+    q3_2: ["[1,2,3,4]"],
+    q3_3: ["[3,4]"],
+    q4_1: ["1"],
+    q4_2: ["44"],
+    q4_3: ["1994"],
+    q5_1: ["3"],
+    q5_2: ["11"],
+    q5_3: ["15"],
+    q6_1: ["'aa'", "'a*'"],
+    q6_2: ["'mississippi'", "'m*issip*'"],
+    q6_3: ["'abacb'", "'a*ba*b'"],
+    q7_1: ["[[5,-3,3],[10,3,-5],[-20,3,-4]]", "[[-10],[27],[-4]]"],
+    q7_2: ["[[1,-2,1],[2,1,1],[3,4,3]]", "[[3],[4],[-1]]"],
+    q7_3: ["[[3, 0, -4],[0,3,2],[2,3,0]]", "[[0],[-3],[-5]]"],
+    q8_1: ["3", "1"],
+    q8_2: ["4", "16"],
+    q8_3: ["5", "120"],
+    q9_1: ['"aab"', '"xxy"'],
+    q9_2: ["'aab'", "'xyz'"],
+    q9_3: ["'ABACB'", "'XPZ'"],
+    q10_1: ["'nnnnei'"],
+    q10_2: ["'owoztneoerowoztneoer'"],
+    q10_3: ["'fviefrurofuro'"],
+  };
   let ans = [];
   if (questionNo == 1) {
     for (let i = 1; i <= 3; i++) {
@@ -130,7 +166,47 @@ function checkAns() {
     }
   } else if (questionNo == 2) {
     for (let i = 1; i <= 3; i++) {
-      var ans1 = checkit(inputs["q1_" + i]);
+      var ans1 = checkit(inputs["q2_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 3) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q3_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 4) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q4_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 5) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q5_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 6) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q6_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 7) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q7_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 8) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q8_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 9) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q9_" + i]);
+      ans.push(ans1);
+    }
+  } else if (questionNo == 10) {
+    for (let i = 1; i <= 3; i++) {
+      var ans1 = checkit(inputs["q10_" + i]);
       ans.push(ans1);
     }
   }
@@ -140,8 +216,20 @@ function checkAns() {
 function checkAnswer() {
   let ans = checkAns();
   let correct = [
-    ["h\ne\nl\nl\no\n", "b\ny\ne\n", "4\n5\n6\n7\n"],
-    ["olleh\n", "eyb\n", "7654\n"],
+    ["2\n", "4\n", "4\n"],
+    ["CBBABBC\n", "avajava\n", "lol\n"],
+    [
+      "[[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]\n",
+      "[[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]\n",
+      "[[3, 4], [4, 3]]\n",
+    ],
+    ["I\n", "XLIV\n", "MCMXCIV\n"],
+    ["3\n", "0\n", "2\n"],
+    ["True\n", "False\n", "False\n"],
+    ["[[1], [4], [-1]]\n", "[[4], [-1], [-3]]\n", "[[-4], [1], [-3]]\n"],
+    ["123\n", "3241\n", "54321\n"],
+    ["True\n", "False\n", "True\n"],
+    ["9\n", "001122\n", "445\n"],
   ];
   console.log(ans);
   if (JSON.stringify(ans) === JSON.stringify(correct[questionNo - 1])) {
@@ -206,16 +294,6 @@ function saveCode() {
   window.alert("Code saved!");
 }
 
-function downloadCode() {
-  var prog = editor.getValue();
-  var hiddenElement = document.createElement("a");
-  hiddenElement.href = "data:attachment/text," + encodeURI(prog);
-  hiddenElement.download = "download.py" + questionNo;
-  if (confirm("Download Code?")) {
-    hiddenElement.click();
-  }
-}
-
 function shareCode() {
   var link =
     window.location.href.split("?")[0] +
@@ -262,11 +340,6 @@ document.addEventListener("keydown", (event) => {
   if (event.ctrlKey && event.shiftKey && event.key == "S") {
     event.preventDefault();
     saveCode();
-  }
-
-  if (event.ctrlKey && event.shiftKey && event.key == "D") {
-    event.preventDefault();
-    downloadCode();
   }
 
   if (event.ctrlKey && event.shiftKey && event.key == "A") {
