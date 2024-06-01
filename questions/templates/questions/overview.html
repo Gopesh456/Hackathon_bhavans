@@ -4,12 +4,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Questions</title>
+    <title>Problems</title>
     <link rel="stylesheet" href="{%static 'style/overview.css'%}" />
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
+    <!-- <link
       href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
       rel="stylesheet"
     />
@@ -17,89 +17,106 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
+    <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" /> -->
     <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
   </head>
   {%include 'navbar.html'%}
   <body class="bg-dark">
     <div class="container-cos">
-      <table
-        class="table-el table table-sm table-dark table-striped table-hover center"
-        id="table-width"
-      >
-        <thead class="table-dark">
-          <tr>
-            <th id="head-q">Questions</th>
+      <table class="table-el table table-dark center" id="table-width">
+        <thead>
+          <tr id="border-bottom">
+            <th id="head-q">Problems</th>
             <th id="head-res"><div class="head-con">Results</div></th>
             <th id="head-res"><div class="head-con">Points</div></th>
           </tr>
         </thead>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques1 ques" id="test">
-            <a href="/question/1" class="links" id="1Q">Question 1</a>
+            <a href="/question/1" class="links text-center" id="1Q"
+              >Problem 1</a
+            >
           </td>
           <td class="result"><div class="res" id="1R">{{1_QE}}</div></td>
           <td class="result"><div class="pts" id="1P">{{1_P}}</div></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques2 ques">
-            <a href="/question/2" class="links" id="2Q">Question 2</a>
+            <a href="/question/2" class="links text-center" id="2Q"
+              >Problem 2</a
+            >
           </td>
           <td class="result"><span class="res" id="2R"> {{2_QE}} </span></td>
           <td class="result"><span class="pts" id="2P"> {{2_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques3 ques">
-            <a href="/question/3" class="links" id="3Q">Question 3</a>
+            <a href="/question/3" class="links text-center" id="3Q"
+              >Problem 3</a
+            >
           </td>
           <td class="result"><span class="res" id="3R"> {{3_QE}} </span></td>
           <td class="result"><span class="pts" id="3P"> {{3_P}} </span></td>
-        </tr>
-        <tr>
+        </tr id="border-bottom">
+        <tr id="border-bottom">
           <td class="ques4 ques">
-            <a href="/question/4" class="links" id="4Q">Question 4</a>
+            <a href="/question/4" class="links text-center" id="4Q"
+              >Problem 4</a
+            >
           </td>
           <td class="result"><span class="res" id="4R"> {{4_QE}} </span></td>
           <td class="result"><span class="pts" id="4P"> {{4_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques5 ques">
-            <a href="/question/5" class="links" id="5Q">Question 5</a>
+            <a href="/question/5" class="links text-center" id="5Q"
+              >Problem 5</a
+            >
           </td>
           <td class="result"><span class="res" id="5R"> {{5_QE}} </span></td>
           <td class="result"><span class="pts" id="5P"> {{5_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques6 ques">
-            <a href="/question/6" class="links" id="6Q">Question 6</a>
+            <a href="/question/6" class="links text-center" id="6Q"
+              >Problem 6</a
+            >
           </td>
           <td class="result"><span class="res" id="6R"> {{6_QE}} </span></td>
           <td class="result"><span class="res pts" id="6P"> {{6_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques7 ques">
-            <a href="/question/7" class="links" id="7Q">Question 7</a>
+            <a href="/question/7" class="links text-center" id="7Q"
+              >Problem 7</a
+            >
           </td>
           <td class="result"><span class="res" id="7R"> {{7_QE}} </span></td>
           <td class="result"><span class="pts" id="7P"> {{7_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques8 ques">
-            <a href="/question/8" class="links" id="8Q">Question 8</a>
+            <a href="/question/8" class="links text-center" id="8Q"
+              >Problem 8</a
+            >
           </td>
           <td class="result"><span class="res" id="8R"> {{8_QE}} </span></td>
           <td class="result"><span class="pts" id="8P"> {{8_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques9 ques">
-            <a href="/question/9" class="links" id="9Q">Question 9</a>
+            <a href="/question/9" class="links text-center" id="9Q"
+              >Problem 9</a
+            >
           </td>
           <td class="result"><span class="res" id="9R"> {{9_QE}} </span></td>
           <td class="result"><span class="pts" id="9P"> {{9_P}} </span></td>
         </tr>
-        <tr>
+        <tr id="border-bottom">
           <td class="ques10 ques">
-            <a href="/question/10" class="links" id="10Q">Question 10</a>
+            <a href="/question/10" class="links text-center" id="10Q"
+              >Problem 10</a
+            >
           </td>
           <td class="result"><span class="res" id="10R"> {{10_QE}} </span></td>
           <td class="result"><span class="pts" id="10P"> {{10_P}} </span></td>
@@ -115,7 +132,6 @@
     </div>
     <script src="{%static 'js/overviw_.js'%}"></script>
     <script>
-      console.log("Hello");
       $(document).ready(function () {
         setInterval(function () {
           $.ajax({
@@ -147,14 +163,13 @@
                 } else {
                   $(`#${i}R`).css("color", "white");
                 }
-                // console.log(points[i-1])
               }
             },
             error: function (response) {
               console.log("An Error Occured ");
             },
           });
-        }, 500);
+        }, 100);
       });
     </script>
   </body>

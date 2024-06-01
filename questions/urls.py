@@ -7,6 +7,8 @@ urlpatterns = [
     path('',views.homepage),
     path('question/<str:pk>/',views.questions, name='question'),
     path('getquestions/',views.getques,name = "getquestions"),
+    path('getmsg/',views.getmsg,name = "getmsg"),
+    path('sendmsg/',views.sendmsg,name = "sendmsg"),
     path('questions/',views.overview,name = "questions"),
     path('getpoints/',views.getPoints,name = "getpoints"),
     path('getresults/',views.getResults,name = "getresults"),

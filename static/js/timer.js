@@ -3,7 +3,7 @@ let mins_el = document.querySelector("#mins");
 let secs_el = document.querySelector("#secs");
 function timeleft() {
   let date = new Date();
-  const starttime = 16 * 3600 + 14 * 60;
+  const starttime = 22 * 3600 + 47 * 60;
   let seconds = date.getSeconds();
   let mins = date.getMinutes() * 60;
   let hours = date.getHours() * 3600;
@@ -22,6 +22,10 @@ function timeleft() {
   mins_el.textContent = mins1 + ":";
   secs_el.textContent = secs;
   // console.log( [hrs,mins1,secs])
+
+  if (hrs == 0 && mins1 == 0 && secs == 0) {
+    window.location.replace("/logout");
+  }
 }
 
 setInterval(timeleft, 100);

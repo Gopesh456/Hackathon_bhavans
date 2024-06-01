@@ -11,40 +11,145 @@
     <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
   </head>
   <body>
-    <div class="navbar-custom ">
-    <!-- <div class="navbar"> -->
-      <h2 class="hack">Bhavan's Hackathon</h2>
-      <button class="button-31">
-        <a href="/questions" class="question">Problem List</a>
-      </button>
-      <!-- <h2 class="next">></h2> -->
-      <!-- <h2 class="qno">{{pk}}</h2> -->
-      <div class="time-con text-center">
-        <h2 class="time-p text-center">
-          <span id="hrs"></span><span id="mins"></span><span id="secs"></span>
-        </h2>
-      </div>
-      <div class="btn-div">
-        <a href="/questions ">
+    <nav class="navbar navbar-dark bg-dark justify-content-between py-2 px-3">
+      <!-- Navbar content -->
+      <span class="navbar-brand mb-0 h1" href="/questions/">
+        <img
+          src="{%static 'imgs/logo.svg'%}"
+          width="30"
+          height="28"
+          class="d-inline-block align-top"
+          alt=""
+        />
+        Bhavans Hackathon
+        <a href="/questions/" class="">
           <button
-            class="button-28"
-            role="button"
-            style="position: relative; right: 20px"
+            class="btn btn-outline-light my-2 my-sm-0"
+            id="prob-btn"
+            type="submit"
           >
-            Questions
+            Problem List
           </button>
         </a>
-        {% if request.user.is_authenticated %}
+      </span>
 
+      <h2 class="time-p position-absolute top-50 start-50 translate-middle">
+        <span id="hrs"></span><span id="mins"></span><span id="secs"></span>
+      </h2>
+      <div class="logout-container">
+        <span>
+          <button
+            class="btn btn-outline-light"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight"
+            aria-controls="offcanvasRight"
+          >
+            <img src="{%static 'imgs\message-square.svg'%}" />
+          </button>
+
+          <div
+            class="offcanvas offcanvas-end"
+            tabindex="-1"
+            id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel"
+          >
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">Share</h5>
+              <button
+                type="button"
+                class="btn-close text-reset"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="Messages">Messages:</div>
+              <span class="form-inline my-lg-0" id="chatbox">
+                <input
+                  class="form-control mr-sm-2"
+                  type="search"
+                  placeholder="Code Link"
+                  aria-label="Search"
+                  id="msgbox"
+                />
+                <button
+                  class="btn btn-outline-success my-sm-0"
+                  id="msg-btn"
+                  type="submit"
+                >
+                  Send
+                </button>
+              </span>
+            </div>
+          </div>
+        </span>
         <a href="{% url 'logout' %}">
-          <button class="button-28" role="button">Logout</button>
+          <button
+            class="btn btn-outline-light mx-2 my-sm-0"
+            id="prob-btn"
+            type="submit"
+          >
+            Logout
+          </button>
         </a>
-
-        {%endif%}
       </div>
-    </div>
-    <script src="{%static 'js/timer.js'%}">
-      console.log("from navbar")
+    </nav>
+    <script src="{%static 'js/timer.js'%}"></script>
+    <script>
+      $(document).ready(function () {
+        $("#msg-btn").click(function () {
+          let msg = $("#msgbox").val();
+          $.ajax({
+            type: "POST",
+            url: "{% url 'sendmsg' %}",
+            data: {
+              msg: msg,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+            },
+            success: function (response) {
+              console.log("Message Sent");
+              // console.log(response);
+            },
+            error: function (response) {
+              console.log("An Error Occured ");
+            },
+          });
+        });
+      });
+      setInterval(function () {
+        $.ajax({
+          type: "GET",
+          url: "{% url 'getmsg' %}",
+          success: function (response) {
+            $(".Messages").html("");
+            let msgs = "";
+            for (let i = 0; i < response.messages.length; i++) {
+              console.log(response.messages[i]["message"]);
+              // update the message with the msg from database
+              if (response.messages[i]["message"].includes("http")) {
+                msgs +=
+                  "<a href='" +
+                  response.messages[i]["message"] +
+                  "'>" +
+                  response.messages[i]["message"] +
+                  "</a>" +
+                  "<hr>";
+              } else {
+                msgs +=
+                  "<div class='msg'>" +
+                  response.messages[i]["message"] +
+                  "</div>" +
+                  "<hr>";
+              }
+            }
+            $(".Messages").html(msgs);
+          },
+          error: function (response) {
+            console.log("An Error Occured ");
+          },
+        });
+      }, 1000);
     </script>
   </body>
 </html>

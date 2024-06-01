@@ -32,7 +32,6 @@
     <div class="page">
       <div class="questionDiv user-select-none">
         <div style="visibility: hidden" class="heading">
-          <!-- <h1 style="display: inline">Question</h1> -->
           <h1
             style="display: inline; padding-left: 5px; visibility: hidden"
             class="question_no"
@@ -45,17 +44,65 @@
       </div>
       <div class="editor-container">
         <div id="wrapper">
-          <div class="topnav" id="myTopnav">
-            <a onclick="main()" class="runBtn">Run</a>
-            <a onclick="toggleConsole()">Console</a>
-            <a onclick="saveCode()">Save</a>
-            <a onclick="shareCode()">Share</a>
-            <a onclick="kbShortcuts()">Shortcuts</a>
-
-            <a class="submit-btn" onclick="sendResult()">Submit</a>
-
-            <!-- <a onclick="aceSettings()">Settings</a> -->
-          </div>
+          <nav
+            class="navbar navbar-dark bg-dark justify-content-between py-2 px-3"
+          >
+            <span class="nav-cus">
+              <ul class="navbar-nav" id="inline-ul">
+                <li id="inline-ul">
+                  <a
+                    onclick="main()"
+                    class="btn btn-outline-light nav-item"
+                    id="btns-cus"
+                    >Run</a
+                  >
+                </li>
+                <li id="inline-ul">
+                  <a
+                    onclick="toggleConsole()"
+                    id="btns-cus"
+                    class="btn btn-outline-light nav-item"
+                    >Console</a
+                  >
+                </li>
+                <li id="inline-ul">
+                  <a
+                    onclick="saveCode()"
+                    class="btn btn-outline-light nav-item"
+                    id="btns-cus"
+                    >Save</a
+                  >
+                </li>
+                <li id="inline-ul">
+                  <a
+                    onclick="shareCode()"
+                    class="btn btn-outline-light nav-item"
+                    id="btns-cus"
+                    >Share</a
+                  >
+                </li>
+                 
+                <li id="inline-ul">
+                  <a
+                    onclick="kbShortcuts()"
+                    class="btn btn-outline-light nav-item"
+                    id="btns-cus"
+                    >Shortcuts</a
+                  >
+                </li>
+              </ul>
+            </span>
+            <span>
+              <a
+                class="btn btn-outline-light fullscr"
+                id="no-hover"
+                onclick="toggleFullScreen()"
+              />Full Screen</a>
+              <a class="btn btn-outline-success" onclick="sendResult()"
+                >Submit</a
+              >
+            </span>
+          </nav>
           <!-- <div id="editor"></div> -->
           <div id="editor"></div>
           <textarea id="output"></textarea>

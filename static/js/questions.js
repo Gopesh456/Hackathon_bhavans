@@ -48,6 +48,8 @@ function run() {
 
 function main() {
   run();
+  let fullscrBtn = document.querySelector(".fullscr");
+  fullscrBtn.innerHTML = "Full Screen";
   var mypre = document.getElementById("output");
   mypre.style.display = "block";
   editor.resize();
@@ -263,21 +265,6 @@ function sendResult() {
   requestObj.send(formData);
   saveCodeSubmit();
 }
-function openFile() {
-  var files = input.files;
-  if (files.length == 0) return;
-
-  var file = files[0];
-  var reader = new FileReader();
-  reader.onload = (e) => {
-    var file = e.target.result;
-    var lines = file.split(/\r\n|\n/);
-    editor.setValue(lines.join("\n"));
-  };
-
-  reader.onerror = (e) => alert(e.target.error.name);
-  reader.readAsText(file);
-}
 
 function toggleConsole() {
   var mypre = document.getElementById("output");
@@ -388,13 +375,27 @@ if (params.code != null) {
   editor.setValue(params.code);
 }
 
-var input = document.querySelector("input");
-input.addEventListener("change", () => {
-  openFile();
-});
-
-window.addEventListener("beforeunload", function (event) {
-  return null;
-});
-
 toggleConsole();
+
+let editorDiv = document.querySelector(".editor-container");
+
+function toggleFullScreen() {
+  let fullscrBtn = document.querySelector(".fullscr");
+  let editorDiv = document.querySelector(".editor-container");
+  if (document.fullscreenElement) {
+    toggleConsole();
+    fullscrBtn.innerHTML = "Full Screen";
+    document.exitFullscreen();
+  } else {
+    fullscrBtn.innerHTML = "Exit";
+    toggleConsole();
+    editorDiv.requestFullscreen();
+  }
+  console.log("working");
+}
+
+const onchange = () => {
+  editorDiv.className = document.fullscreenElement ? "full" : "";
+};
+
+document.eventListener("fullscreenchange", onchange);

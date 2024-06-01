@@ -1,14 +1,16 @@
 from email.policy import HTTP
+import json
 from re import T
 import re
 from django.shortcuts import render, redirect
-from .models import Questions,answer,TotalPoints
-from django.http import HttpResponse, JsonResponse
+from .models import Questions,answer,TotalPoints,Messages
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime,timedelta
 import questions.checker.python_checker as pyC
 from threading import Timer
+
 # Create your views here.
 
 
@@ -54,6 +56,20 @@ def getques(req):
     questions = Questions.objects.all()
     return JsonResponse({'question':list(questions.values())})
 
+def sendmsg(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    print('is_ajax:', is_ajax)
+    print("getmsg working")
+    #post the msg to the db
+    msg = Messages()
+    msg.message = request.POST['msg']
+    msg.username = request.user.username
+    msg.save()
+    return JsonResponse({'msg':msg.message})
+def getmsg(request):
+    print("getmsg working")
+    messages = Messages.objects.filter(username = request.user.username)
+    return JsonResponse({'messages':list(messages.values())})
 def getPoints(req):
     ptsLi = []
     for i in range(1,11) :
