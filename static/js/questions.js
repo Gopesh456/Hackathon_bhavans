@@ -347,6 +347,8 @@ if (questionNo == 4) {
   editor.setValue(def_code + "input_data = eval(input())");
 }
 editor.session.setMode("ace/mode/python");
+editor.session.setUseWrapMode(true);
+
 editor.setShowPrintMargin(false);
 editor.commands.removeCommand("findprevious");
 editor.commands.removeCommand("duplicateSelection");
