@@ -395,6 +395,8 @@ function toggleFullScreen() {
     shortcutBtn.style.display = "none";
     fullscreen = false;
     fullscrBtn.innerHTML = "Full Screen";
+    editor.session.setUseWrapMode(false);
+    editor.session.setUseWrapMode(true);
   } else {
     questionDiv.style.display = "none";
     editorDiv.style.display = "block";
@@ -402,6 +404,8 @@ function toggleFullScreen() {
     editorDiv.style.height = "100vh";
     shortcutBtn.style.display = "inline-block";
     fullscreen = true;
+    editor.session.setUseWrapMode(false);
+    editor.session.setUseWrapMode(true);
     fullscrBtn.innerHTML = "Exit Full Screen";
   }
   console.log(fullscreen);
