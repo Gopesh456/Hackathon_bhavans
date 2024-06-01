@@ -378,24 +378,29 @@ if (params.code != null) {
 toggleConsole();
 
 let editorDiv = document.querySelector(".editor-container");
-
+let fullscreen = false;
 function toggleFullScreen() {
+  let shortcutBtn = document.querySelector(".shortcut");
+  let questionDiv = document.querySelector(".questionDiv");
   let fullscrBtn = document.querySelector(".fullscr");
   let editorDiv = document.querySelector(".editor-container");
-  if (document.fullscreenElement) {
-    toggleConsole();
+  if (fullscreen) {
+    questionDiv.style.display = "block";
+    editorDiv.style.display = "flex";
+    editorDiv.style.width = "50%";
+    editorDiv.style.height = "80vh";
+    console.log("working");
+    shortcutBtn.style.display = "none";
+    fullscreen = false;
     fullscrBtn.innerHTML = "Full Screen";
-    document.exitFullscreen();
   } else {
-    fullscrBtn.innerHTML = "Exit";
-    toggleConsole();
-    editorDiv.requestFullscreen();
+    questionDiv.style.display = "none";
+    editorDiv.style.display = "block";
+    editorDiv.style.width = "100%";
+    editorDiv.style.height = "100vh";
+    shortcutBtn.style.display = "inline-block";
+    fullscreen = true;
+    fullscrBtn.innerHTML = "Exit Full Screen";
   }
-  console.log("working");
+  console.log(fullscreen);
 }
-
-const onchange = () => {
-  editorDiv.className = document.fullscreenElement ? "full" : "";
-};
-
-document.eventListener("fullscreenchange", onchange);

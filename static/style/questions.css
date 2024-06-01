@@ -10,7 +10,6 @@
   text-wrap: wrap;
   color: whitesmoke;
   margin-right: 10px;
-  margin-left: 10px;
   border: #4d4d4d solid 1px;
   border-radius: 6px;
 }
@@ -23,6 +22,7 @@ body {
   display: flex;
   box-sizing: border-box;
   padding-right: 10px;
+  padding-left: 10px;
   width: 100%;
 }
 #wrapper {
@@ -210,12 +210,4 @@ input[type="file"] {
 #no-hover {
   padding: 5px 7px;
   margin-right: 10px;
-}
-.full {
-  width: 100vh;
-  height: 100vh;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #1e1f22; */
 }
