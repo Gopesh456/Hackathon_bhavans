@@ -44,7 +44,9 @@ def getCorrect(req):
             ans_a.save()
     else:
         pass
-    return redirect('/questions/') 
+    # return redirect('/questions/') 
+    return render(req,'questions/overview.html')
+
 def getConsoleOutput(req):
     pass
 
