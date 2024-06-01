@@ -100,6 +100,7 @@
       $(document).ready(function () {
         $("#msg-btn").click(function () {
           let msg = $("#msgbox").val();
+          $("#msgbox").val("");
           $.ajax({
             type: "POST",
             url: "{% url 'sendmsg' %}",
@@ -108,7 +109,6 @@
               csrfmiddlewaretoken: "{{csrf_token}}",
             },
             success: function (response) {
-              console.log("Message Sent");
               // console.log(response);
             },
             error: function (response) {
@@ -125,8 +125,6 @@
             $(".Messages").html("");
             let msgs = "";
             for (let i = 0; i < response.messages.length; i++) {
-              console.log(response.messages[i]["message"]);
-              // update the message with the msg from database
               if (response.messages[i]["message"].includes("http")) {
                 msgs +=
                   "<a href='" +

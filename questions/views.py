@@ -58,8 +58,6 @@ def getques(req):
 
 def sendmsg(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-    print('is_ajax:', is_ajax)
-    print("getmsg working")
     #post the msg to the db
     msg = Messages()
     msg.message = request.POST['msg']
@@ -67,7 +65,6 @@ def sendmsg(request):
     msg.save()
     return JsonResponse({'msg':msg.message})
 def getmsg(request):
-    print("getmsg working")
     messages = Messages.objects.filter(username = request.user.username)
     return JsonResponse({'messages':list(messages.values())})
 def getPoints(req):
