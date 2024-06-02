@@ -1,14 +1,14 @@
 {%load static%}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leaderboard</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    />
+
+    <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
+    <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
     <script src="{%static 'js\jquery-3.7.1.js'%}"></script>
     <style>
       body {
@@ -41,14 +41,42 @@
         font-size: 2em;
         margin-bottom: 20px;
       }
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+      .first {
+        background-color: #ffd700; /* Gold */
+        color: black;
+      }
+      .second {
+        background-color: #c0c0c0; /* Silver */
+        color: black;
+      }
+      .third {
+        background-color: #cd7f32; /* Bronze */
+        color: black;
+      }
     </style>
   </head>
   <body>
     <div class="header">Leaderboard</div>
     <div class="container">
-      <table id="leaderboard" class="table table-striped">
-        <tr></tr>
-      </table>
+      <div class="card">
+        <table id="leaderboard" class="table table-striped">
+          <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Points</th>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <script>
@@ -67,9 +95,16 @@
                 let rank = i + 1; // Add this line
                 let totalPoints = response.points[i].points;
                 let username = response.points[i].username;
+                let rankClass = "";
+                if (rank === 1) rankClass = "first";
+                else if (rank === 2) rankClass = "second";
+                else if (rank === 3) rankClass = "third";
+
                 data +=
-                  "<tr><td>" +
-                  rank + // Add this line
+                  "<tr class='" +
+                  rankClass +
+                  "'><td>" + // Add the class here
+                  rank +
                   "</td><td>" +
                   username +
                   "</td><td>" +
