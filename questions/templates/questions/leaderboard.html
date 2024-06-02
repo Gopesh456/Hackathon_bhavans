@@ -63,6 +63,19 @@
         background-color: #cd7f32; /* Bronze */
         color: black;
       }
+      @keyframes highlight {
+        from {
+          background-color: #4caf50;
+        }
+        to {
+          background-color: white;
+        }
+      }
+
+      .up-in-rank {
+        animation-name: highlight;
+        animation-duration: 2s;
+      }
     </style>
   </head>
   <body>
@@ -81,6 +94,7 @@
 
     <script>
       $(document).ready(function () {
+        let previousRanks = {};
         setInterval(function () {
           $.ajax({
             type: "GET",
@@ -89,21 +103,35 @@
               response.points.sort(function (a, b) {
                 return b.points - a.points;
               });
-
+              function userHasGoneUpInRank(username) {
+                if (previousRanks[username] === undefined) {
+                  previousRanks[username] = 0;
+                  return false;
+                }
+                let currentRank = response.points.findIndex(
+                  (element) => element.username === username
+                );
+                if (currentRank < previousRanks[username]) {
+                  previousRanks[username] = currentRank;
+                  return true;
+                }
+                previousRanks[username] = currentRank;
+                return false;
+              }
               let data = "";
               for (let i = 0; i < response.points.length; i++) {
-                let rank = i + 1; // Add this line
+                let rank = i + 1;
                 let totalPoints = response.points[i].points;
                 let username = response.points[i].username;
                 let rankClass = "";
                 if (rank === 1) rankClass = "first";
                 else if (rank === 2) rankClass = "second";
                 else if (rank === 3) rankClass = "third";
-
+                if (userHasGoneUpInRank(username)) rankClass += " up-in-rank";
                 data +=
                   "<tr class='" +
                   rankClass +
-                  "'><td>" + // Add the class here
+                  "'><td>" +
                   rank +
                   "</td><td>" +
                   username +
