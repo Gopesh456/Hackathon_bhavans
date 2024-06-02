@@ -53,3 +53,10 @@ nav {
   bottom: 20px;
   background-color: white;
 }
+
+#msg-icon:hover {
+  #msg-img {
+    -webkit-filter: grayscale(1) invert(1);
+    filter: grayscale(1) invert(1);
+  }
+}
