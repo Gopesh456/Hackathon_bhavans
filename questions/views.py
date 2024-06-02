@@ -67,6 +67,12 @@ def sendmsg(request):
 def getmsg(request):
     messages = Messages.objects.filter(username = request.user.username)
     return JsonResponse({'messages':list(messages.values())})
+def getTotalPoints(request):
+    messages = TotalPoints.objects.all()
+    return JsonResponse({'points':list(messages.values())})
+
+def leaderboard(req):
+    return render(req,'questions/leaderboard.html')
 def getPoints(req):
     ptsLi = []
     for i in range(1,11) :
@@ -100,8 +106,6 @@ def updatingTotalPoints(req):
     pointsDB.save()
 
 
-def leaderboard(req):
-    return render(req,'questions/leaderboard.html')
 @login_required(login_url='login')  
 def overview(req):
     
