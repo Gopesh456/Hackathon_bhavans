@@ -4,11 +4,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Leaderboard</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
     <script src="{%static 'js\jquery-3.7.1.js'%}"></script>
+    <style>
+      body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        margin-top: 50px;
+      }
+      #leaderboard {
+        background-color: #fff;
+        border-collapse: collapse;
+        box-shadow: 2px 2px 12px 1px rgba(0, 0, 0, 0.1);
+      }
+      #leaderboard th {
+        background-color: #4caf50;
+        color: white;
+        text-align: left;
+        padding: 10px;
+      }
+      #leaderboard td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .header {
+        text-align: center;
+        padding: 20px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+    </style>
   </head>
   <body>
-    <table id="leaderboard"></table>
+    <div class="header">Leaderboard</div>
+    <div class="container">
+      <table id="leaderboard" class="table table-striped">
+        <tr></tr>
+      </table>
+    </div>
 
     <script>
       $(document).ready(function () {
@@ -23,10 +64,13 @@
 
               let data = "";
               for (let i = 0; i < response.points.length; i++) {
+                let rank = i + 1; // Add this line
                 let totalPoints = response.points[i].points;
                 let username = response.points[i].username;
                 data +=
                   "<tr><td>" +
+                  rank + // Add this line
+                  "</td><td>" +
                   username +
                   "</td><td>" +
                   totalPoints +
@@ -35,6 +79,7 @@
               console.log(data);
               let data2 =
                 "<tr>" +
+                "<th>Rank</th>" +
                 "<th>Username</th>" +
                 "<th>Points</th>" +
                 "</tr>" +
