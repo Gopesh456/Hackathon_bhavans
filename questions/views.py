@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from datetime import datetime,timedelta
 import questions.checker.python_checker as pyC
 from threading import Timer
-
+from django.views.decorators.http import require_GET
 # Create your views here.
 
 
@@ -77,17 +77,8 @@ def getTotalPoints(request):
 
 def leaderboard(req):
     return render(req,'questions/leaderboard.html')
-def getPoints(req):
-    ptsLi = []
-    for i in range(1,11) :
-        try:
-            pts= answer.objects.filter(username = req.user.username, qno = str(i)).last().points  #type: ignore  
-        except:
-            pts = 0
-        ptsLi.append(pts)
-    return JsonResponse({'points':ptsLi}) 
 
-def getResults(req):
+def getData(req):
     resLi = []
     for i in range(1,11) :
         try:
@@ -95,7 +86,15 @@ def getResults(req):
         except:
             res = '-'
         resLi.append(res)
-    return JsonResponse({'results':resLi})
+    ptsLi = []
+    for i in range(1,11) :
+        try:
+            pts= answer.objects.filter(username = req.user.username, qno = str(i)).last().points  #type: ignore  
+        except:
+            pts = 0
+        ptsLi.append(pts)
+    return JsonResponse({'results':resLi,'points':ptsLi})
+
 
 def updatingTotalPoints(req):
     current_username = req.user.username
@@ -159,7 +158,7 @@ def overview(req):
         else:
             pass
     
-    Timer(1000,updatingTotalPoints(req)).start()
+    Timer(1000,updatingTotalPoints(req)).start() # type: ignore
     return render(req,'questions/overview.html',context2)
 
 

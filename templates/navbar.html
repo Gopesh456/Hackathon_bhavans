@@ -119,7 +119,7 @@
           });
         });
       });
-      setInterval(function () {
+      function fetchMessages() {
         $.ajax({
           type: "GET",
           url: "{% url 'getmsg' %}",
@@ -149,7 +149,10 @@
             console.log("An Error Occured ");
           },
         });
-      }, 1000);
+      }
+
+      fetchMessages(); // Call fetchMessages immediately when the page loads
+      setInterval(fetchMessages, 1000); // Then call it every second
     </script>
   </body>
 </html>

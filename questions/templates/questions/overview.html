@@ -142,35 +142,20 @@
     <script src="{%static 'js/overviw_.js'%}"></script>
     <script>
       $(document).ready(function () {
-        setInterval(function () {
+        function fetchData() {
           $.ajax({
             type: "GET",
-            url: "{% url 'getpoints'%}",
+            url: "{% url 'getdata'%}", // Combined endpoint for points and results
             success: function (response) {
               let points = response.points;
+              let results = response.results;
               for (let i = 1; i <= 10; i++) {
                 $(`#${i}P`).text(points[i - 1].toString());
-              }
-            },
-            error: function (response) {
-              console.log("An Error Occured ");
-            },
-          });
-        }, 100);
-        setInterval(function () {
-          $.ajax({
-            type: "GET",
-            url: "{% url 'getresults'%}",
-            success: function (response) {
-              let points = response.results;
-              for (let i = 1; i <= 10; i++) {
-                $(`#${i}R`).text(points[i - 1].toString());
+                $(`#${i}R`).text(results[i - 1].toString());
                 if ($(`#${i}R`).text() == "Correct") {
                   $(`#${i}R`).css("color", "green");
                 } else if ($(`#${i}R`).text() == "Incorrect") {
                   $(`#${i}R`).css("color", "red");
-                } else {
-                  $(`#${i}R`).css("color", "white");
                 }
               }
             },
@@ -178,7 +163,11 @@
               console.log("An Error Occured ");
             },
           });
-        }, 100);
+        }
+
+        fetchData(); // Call the function immediately when the page loads
+
+        setInterval(fetchData, 2000); // Then call it every second
       });
     </script>
   </body>

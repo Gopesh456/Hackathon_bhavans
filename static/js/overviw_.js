@@ -7,8 +7,8 @@ function adding() {
   let total_pts = 0;
   for (let i = 0; i < 10; i++) {
     total_pts += parseInt(pts[i].textContent);
-    // console.log(total_pts);
     totalPoints.textContent = total_pts;
   }
 }
-setInterval(adding, 1000);
+adding();
+setInterval(adding, 2000);
