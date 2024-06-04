@@ -36,12 +36,16 @@ def getCorrect(req):
             ans_a.create = datetime.now()
             ans_a.Result = req.POST['result']
             if ans_a.Result == 'Correct':
-                starttime = datetime(now.year, now.month, now.day,16,14)  
+                starttime = datetime(now.year, now.month, now.day,8,20)  
                 time_difference = now - starttime
                 seconds = time_difference.total_seconds()
+                print(seconds)
                 points = seconds // 180 
                 points *=10
-                ans_a.points =int(400 - points)
+                pts = int(400 - points)
+                if pts < 100:
+                    pts = 100
+                ans_a.points =pts
                 ans_a.save()
             ans_a.save()
     else:

@@ -15,9 +15,9 @@ function builtinRead(x) {
   return Sk.builtinFiles["files"][x];
 }
 
-function run() {
+function run(prog) {
   var t0 = new Date().getTime();
-  var prog = editor.getValue();
+  var prog = prog;
   var mypre = document.getElementById("output");
   mypre.value = "";
   Sk.pre = "output";
@@ -46,8 +46,30 @@ function run() {
   );
 }
 
+// function main() {
+//   run();
+//   let fullscrBtn = document.querySelector(".fullscr");
+//   fullscrBtn.innerHTML = "Full Screen";
+//   var mypre = document.getElementById("output");
+//   mypre.style.display = "block";
+//   editor.resize();
+// }
 function main() {
-  run();
+  let prog = editor.getValue();
+  let evalInputMatch = prog.match(/eval\(input\((.*?)\)\)/);
+
+  if (evalInputMatch) {
+    let promptMessage = evalInputMatch[1]; // Get the argument of input()
+    let userInput = prompt(promptMessage);
+    let progCopy = prog.replace(/eval\(input\((.*?)\)\)/g, `${userInput}`);
+    console.log(progCopy);
+    run(progCopy);
+  } else {
+    run(prog);
+    console.log("else is running");
+    console.log(prog);
+  }
+
   let fullscrBtn = document.querySelector(".fullscr");
   fullscrBtn.innerHTML = "Full Screen";
   var mypre = document.getElementById("output");
