@@ -62,12 +62,10 @@ function main() {
     let promptMessage = evalInputMatch[1]; // Get the argument of input()
     let userInput = prompt(promptMessage);
     let progCopy = prog.replace(/eval\(input\((.*?)\)\)/g, `${userInput}`);
-    console.log(progCopy);
+
     run(progCopy);
   } else {
     run(prog);
-    console.log("else is running");
-    console.log(prog);
   }
 
   let fullscrBtn = document.querySelector(".fullscr");
@@ -105,9 +103,6 @@ function checkit(input) {
       if (openParens === 0) {
         results.push(prog.slice(start, i));
       } else {
-        console.log(
-          "Unbalanced parentheses in input call starting at index " + start
-        );
       }
     }
 
@@ -126,9 +121,7 @@ function checkit(input) {
       }
     }
   }
-  // console.log(matches)
   let code = codeli.join("/n");
-  console.log(code);
   var mypre = document.getElementById("out");
   mypre.innerHTML = "";
   Sk.pre = "out";
@@ -137,16 +130,12 @@ function checkit(input) {
   var myPromise = Sk.misceval.asyncToPromise(function () {
     return Sk.importMainWithBody("<stdin>", false, code, true);
   });
-  // const finalOutput;
   myPromise.then(
-    function (mod) {
-      // console.log('success');
-    },
+    function (mod) {},
     function (err) {
       mypre.innerHTML = mypre.innerHTML + err.toString() + "\n";
     }
   );
-  // console.log(Error());
   return mypre.innerHTML;
 }
 function checkAns() {
@@ -255,7 +244,6 @@ function checkAnswer() {
     ["True\n", "False\n", "True\n"],
     ["9\n", "001122\n", "445\n"],
   ];
-  console.log(ans);
   if (JSON.stringify(ans) === JSON.stringify(correct[questionNo - 1])) {
     return "Correct";
   } else {
@@ -267,10 +255,8 @@ function saveCodeSubmit() {
   window.alert("Submit code!");
 }
 function sendResult() {
-  // console.log("working")s
   var value = checkAnswer();
   var userCode = editor.getValue();
-  console.log(value);
   var csrftoken = "{{ csrf_token }}";
   const requestObj = new XMLHttpRequest();
   requestObj.onreadystatechange = function () {
@@ -413,7 +399,6 @@ function toggleFullScreen() {
     editorDiv.style.display = "flex";
     editorDiv.style.width = "50%";
     editorDiv.style.height = "80vh";
-    console.log("working");
     shortcutBtn.style.display = "none";
     fullscreen = false;
     fullscrBtn.innerHTML = "Full Screen";
@@ -430,5 +415,4 @@ function toggleFullScreen() {
     editor.session.setUseWrapMode(true);
     fullscrBtn.innerHTML = "Exit Full Screen";
   }
-  console.log(fullscreen);
 }

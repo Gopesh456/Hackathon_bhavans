@@ -10,18 +10,16 @@
     <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
     <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
     <script src="{%static 'js\jquery-3.7.1.js'%}"></script>
+    <link
+      rel="icon"
+      href="{%static 'imgs/cropped-PIES-192x192.png'%}"
+      sizes="192x192"
+    />
   </head>
   <body>
     <nav class="navbar navbar-dark bg-dark justify-content-between py-2 px-3">
       <!-- Navbar content -->
       <span class="navbar-brand mb-0 h1" href="/questions/">
-        <img
-          src="{%static 'imgs/logo.svg'%}"
-          width="30"
-          height="28"
-          class="d-inline-block align-top"
-          alt=""
-        />
         Bhavans Hackathon
         <a href="/questions/" class="">
           <button
@@ -57,7 +55,7 @@
             aria-labelledby="offcanvasRightLabel"
           >
             <div class="offcanvas-header">
-              <h5 id="offcanvasRightLabel">Share</h5>
+              <h5 id="offcanvasRightLabel">Chat</h5>
               <button
                 type="button"
                 class="btn-close text-reset"
@@ -71,7 +69,7 @@
                 <input
                   class="form-control mr-sm-2"
                   type="search"
-                  placeholder="Code Link"
+                  placeholder="Code Link / Message"
                   aria-label="Search"
                   id="msgbox"
                 />
@@ -86,10 +84,11 @@
             </div>
           </div>
         </span>
+        <span class="userLogged">{{user.username}}</span>
         <a href="{% url 'logout' %}">
           <button
-            class="btn btn-outline-light mx-2 my-sm-0"
-            id="prob-btn"
+            class="btn btn-outline-light mx-2 my-sm-0 logout"
+            id="prob-btn "
             type="submit"
           >
             Logout
@@ -126,9 +125,7 @@
           success: function (response) {
             $(".Messages").html("");
             let msgs = "";
-            console.log(
-              response.messages[response.messages.length - 1]["message"]
-            );
+
             for (let i = 0; i < response.messages.length; i++) {
               if (response.messages[i]["message"].includes("http")) {
                 let url = response.messages[i]["message"].replace(/'/g, "%27"); // Replace single quotes with %27

@@ -5,8 +5,8 @@
   margin-left: 20px;
   font-weight: 700;
 }
-#prob-btn {
-  /* display: none; */
+.logout {
+  display: none !important;
 }
 nav {
   font-family: "Trebuchet MS", sans-serif;
@@ -66,4 +66,16 @@ nav {
 .Messages {
   padding: 10px;
   text-wrap: wrap;
+}
+.userLogged {
+  position: relative;
+  color: white;
+  font-weight: 700;
+  border: 1px solid white;
+  padding: 10px;
+  top: 1px;
+  margin-left: 10px;
+  margin-right: 10px;
+  /* margin-top: 5px; */
+  border-radius: 5px;
 }

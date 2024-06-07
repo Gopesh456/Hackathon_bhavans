@@ -1,69 +1,18 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-  {%load static%}
-
-  <head>
-    <meta charset="UTF-8" />
-    <title>Start</title>
-    <link rel="stylesheet" href="{%static 'style/start.css'%}" />
-    <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
-    <style>
-      body {
-        background-color: #343a40; /* Dark background color */
-        color: #fff; /* Light text color */
-        height: 100%; /* Set height to 100% */
-        overflow: hidden; /* Hide overflow */
-      }
-      .card {
-        background-color: #6c757d; /* Darker card background color */
-        color: #fff; /* Light text color */
-        height: calc(100% - 60px); /* Set height to 100% minus the height of the button */
-        overflow: auto; /* Add scroll to the card if the content is too long */
-      }
-      .center {
-        position: absolute; /* Position the button at the bottom of the page */
-        bottom: 0;
-        width: 100%;
-      }
-    </style>
-    <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
-  </head>
-  <body>
-    <div
-      class="container center "
-      style="height: 100vh; width: 100vw; justify-content: center"
-    >
-      <div class="card content mb-3" style="width: 90vh; font-size: 17px">
-        <div class="card-header">
-          <h2 class="card-title center">Rules</h2>
-        </div>
-        <div class="card-body text-right">
-          
-          <div class="center">
-            <button class="btn btn-primary">
-              <a href="/questions" class="custom-btn">Start</a>
-            </button>
-          </div>
-    </div>
-    </body>
-    <script>
-      let url = `ws://${window.location.host}/ws/socket-server/`;
-      const socket = new WebSocket(url);
-      socket.onmessage = (e) => {
-        console.log(e.data);
-      };
-    </script>
-</html> -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Hackathon Rules</title>
+    <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
+    <script src="{%static 'js/jquery-3.7.1.js'%}"></script>
+    <script src="{%static 'js/bootstrap.bundle.min.js'%}"></script>
+    <!-- favicon -->
     <link
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      rel="stylesheet"
+      rel="icon"
+      href="{%static 'imgs/cropped-PIES-192x192.png'%}"
+      sizes="192x192"
     />
     <style>
       body {

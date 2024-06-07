@@ -1,9 +1,12 @@
 * {
   transition: all 0.25s ease-out;
 }
-
+@font-face {
+  font-family: "Roboto";
+  src: url("{%static 'style/Roboto-Regular.ttf'%}") format("truetype");
+}
 .username {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 16px;
   display: flex;
   flex-direction: column;
@@ -23,7 +26,7 @@
   font-size: 16px;
   color: white;
   padding-left: 10px;
-  font-family: "Montserrat", serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   border-radius: 10px;
   background-color: #2e2e2e;
   width: 400px;
@@ -73,7 +76,7 @@ p.signMsg {
   font-size: 22px;
   border-radius: 10px;
   color: white;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .button-52:after {
@@ -124,4 +127,8 @@ p.signMsg {
 }
 .login {
   /* disp */
+}
+#freepik_stories-pair-programming {
+  width: 500px;
+  padding-top: 50px;
 }

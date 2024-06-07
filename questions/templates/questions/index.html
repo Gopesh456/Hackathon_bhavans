@@ -8,7 +8,11 @@
     <title>Question {{pk}}</title>
     <link rel="stylesheet" href="{%static 'style/questions.css'%}" />
     <script src="{%static 'js\jquery-3.7.1.js'%}"></script>
-
+    <link
+      rel="icon"
+      href="{%static 'imgs/cropped-PIES-192x192.png'%}"
+      sizes="192x192"
+    />
     <script
       src="{%static 'js/ace-builds/src-noconflict/ace.js'%}"
       type="text/javascript"
@@ -125,7 +129,6 @@
                       $('#question-el').html(ques);
                   },
                   error: function (response) {
-                      console.log("An Error Occured ");
                   },
               });
       });
