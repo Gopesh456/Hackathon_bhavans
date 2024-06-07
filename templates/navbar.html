@@ -111,7 +111,7 @@
               csrfmiddlewaretoken: "{{csrf_token}}",
             },
             success: function (response) {
-              // console.log(response);
+              // console.log(response.msg);
             },
             error: function (response) {
               console.log("An Error Occured ");
@@ -126,15 +126,14 @@
           success: function (response) {
             $(".Messages").html("");
             let msgs = "";
+            console.log(
+              response.messages[response.messages.length - 1]["message"]
+            );
             for (let i = 0; i < response.messages.length; i++) {
               if (response.messages[i]["message"].includes("http")) {
+                let url = response.messages[i]["message"].replace(/'/g, "%27"); // Replace single quotes with %27
                 msgs +=
-                  "<a href='" +
-                  response.messages[i]["message"] +
-                  "'>" +
-                  response.messages[i]["message"] +
-                  "</a>" +
-                  "<hr>";
+                  "<a href='" + url + "'>" + url.slice(0, 50) + "</a>" + "<hr>";
               } else {
                 msgs +=
                   "<div class='msg'>" +

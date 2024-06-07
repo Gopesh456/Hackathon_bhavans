@@ -5,7 +5,9 @@
   margin-left: 20px;
   font-weight: 700;
 }
-
+#prob-btn {
+  /* display: none; */
+}
 nav {
   font-family: "Trebuchet MS", sans-serif;
 }
@@ -59,4 +61,9 @@ nav {
     -webkit-filter: grayscale(1) invert(1);
     filter: grayscale(1) invert(1);
   }
+}
+
+.Messages {
+  padding: 10px;
+  text-wrap: wrap;
 }

@@ -12,14 +12,14 @@
     <script src="{%static 'js\jquery-3.7.1.js'%}"></script>
     <style>
       body {
-        background-color: #f4f4f4;
+        background-color: #000;
         font-family: Arial, sans-serif;
       }
       .container {
         margin-top: 50px;
       }
       #leaderboard {
-        background-color: #fff;
+        background-color: #000;
         border-collapse: collapse;
         box-shadow: 2px 2px 12px 1px rgba(0, 0, 0, 0.1);
       }
@@ -47,21 +47,32 @@
         border-radius: 5px;
         padding: 20px;
         margin-bottom: 20px;
+        background-color: black !important;
       }
       .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
       }
       .first {
-        background-color: #ffd700; /* Gold */
-        color: black;
+        /* -webkit-text-stroke: 2px black;
+        color: white;
+        text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+          -1px 1px 0 #000, 1px 1px 0 #000; */
+        color: gold;
+        font-weight: bold;
       }
       .second {
-        background-color: #c0c0c0; /* Silver */
-        color: black;
+        color: #c0c0c0; /* Silver */
+        /* color: black; */
+        font-weight: bold;
       }
       .third {
-        background-color: #cd7f32; /* Bronze */
-        color: black;
+        color: #cd7f32; /* Bronze */
+        /* color: black; */
+        font-weight: bold;
+      }
+      tr {
+        color: white;
+        font-size: 18px;
       }
       @keyframes highlight {
         from {
@@ -104,8 +115,10 @@
                 return b.points - a.points;
               });
               function userHasGoneUpInRank(username) {
+                console.log(username);
                 if (previousRanks[username] === undefined) {
                   previousRanks[username] = 0;
+
                   return false;
                 }
                 let currentRank = response.points.findIndex(
@@ -123,23 +136,43 @@
                 let rank = i + 1;
                 let totalPoints = response.points[i].points;
                 let username = response.points[i].username;
+                let username2 = username;
                 let rankClass = "";
+                if (username.includes("Gopesh")) continue;
+                else if (username.includes("Ahmed")) continue;
+                else if (username.includes("Yash")) continue;
+                if (username2 == "print_TeamADIS_ADIS")
+                  username2 = 'print("TeamADIS") (ADIS)';
+                if (username2.includes("_")) {
+                  username2 = username.replace("_", " (");
+                  username2 += ")";
+                }
+                if (totalPoints === 0) {
+                  rankClass = "";
+                }
                 if (rank === 1) rankClass = "first";
                 else if (rank === 2) rankClass = "second";
                 else if (rank === 3) rankClass = "third";
-                if (userHasGoneUpInRank(username)) rankClass += " up-in-rank";
+                if (totalPoints === 0) {
+                  rankClass = "";
+                }
+                if (userHasGoneUpInRank(username)) {
+                  // console.log(username);
+                  console.log("User has gone up in rank");
+                  rankClass += " up-in-rank";
+                }
                 data +=
                   "<tr class='" +
                   rankClass +
                   "'><td>" +
                   rank +
                   "</td><td>" +
-                  username +
+                  username2 +
                   "</td><td>" +
                   totalPoints +
                   "</td></tr>";
               }
-              console.log(data);
+              // console.log(data);
               let data2 =
                 "<tr>" +
                 "<th>Rank</th>" +

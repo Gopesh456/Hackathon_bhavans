@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   {%load static%}
@@ -15,29 +13,33 @@
       href="https://fonts.googleapis.com/css2?family=Aldrich&family=Mirza:wght@500&family=Trykker&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@1,300&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="{%static 'style/bootstrap.min.css'%}" />
     <script src="{%static 'js\bootstrap.bundle.min.js'%}"></script>
   </head>
   <body>
-  <div class="container container-custom">
+    <!-- <div class="container container-custom">
 
     <div class="row gx-5">
-      <div class="col-6">
+      <div class="col-6 lhs">
         <img src="{%static 'imgs/login_img.svg'%}" alt="Img Error" class="img-fluid">
       </div>
-    <div class="col-6 inputs center">
+    <div class="col-6 inputs center rhs">
 
     <div class="login">
-      <div class="glitch-wrapper">
-        <div class="glitch" data-glitch="Sign In">Sign In</div>
-      </div>
+    <div class="glitch" data-glitch="Sign In">Welcome to Bhavans</div>
 
       <p class="signMsg">
-      Team code and password was sent through Mail.
+      Team code and password was given in registration.
       </p>
       <form action="" method="POST">
         {% csrf_token %}
@@ -80,6 +82,60 @@
     </div>
 
     </div>
-  </div>
+  </div> -->
+
+    <div class="cont">
+      <div class="row no-gutters">
+        <div class="col-md-6 lhs">
+          <div class="login">
+            <div class="glitch" data-glitch="Sign In">Welcome To PIES</div>
+
+            <p class="signMsg">
+              Please enter your login details
+            </p>
+            <form action="" method="POST">
+        {% csrf_token %}
+        <div class="username" >
+          <div class="user_in form-floating mb-3">
+          <input
+            type="text"
+            name="user-name"
+            id="user-el"
+            placeholder="Username"
+            style="outline: none"
+            class="form-control"
+          />
+          <label for="user-el" id = 'label-el'>Team Code</label>
+          </div>
+          <div class="form-floating mb-3">
+
+          <input
+            type="password"
+            name="password"
+            id="pass-el"
+            placeholder="Type your password"
+            style="outline: none"
+            class="form-control"
+          />
+          <label for="pass-el"id = 'label-el'>Password</label>
+          </div>
+          {% if messages %}
+          <ul class="messages text-body-secondary">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+          <button class="button-52" role="button">Login</button>
+        </div>
+      </form>
+        </div>
+        </div>
+        <div class="col-md-6 rhs col-cos">
+          <!-- Content for the second column -->
+          <img src="{%static 'imgs/login_pic.svg'%}" alt="Img Error" class="img-fluid" width="500px"/>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
