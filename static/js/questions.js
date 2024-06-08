@@ -409,7 +409,7 @@ function toggleFullScreen() {
     editorDiv.style.display = "block";
     editorDiv.style.width = "100%";
     editorDiv.style.height = "100vh";
-    shortcutBtn.style.display = "inline-block";
+    // shortcutBtn.style.display = "inline-block";
     fullscreen = true;
     editor.session.setUseWrapMode(false);
     editor.session.setUseWrapMode(true);

@@ -6,7 +6,7 @@
   font-weight: 700;
 }
 .logout {
-  display: none !important;
+  /* display: none !important; */
 }
 nav {
   font-family: "Trebuchet MS", sans-serif;
