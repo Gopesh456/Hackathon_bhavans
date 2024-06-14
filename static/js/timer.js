@@ -4,7 +4,7 @@ let secs_el = document.querySelector("#secs");
 
 function timeleft() {
   let date = new Date(); // Get the current date and time
-  const starttime = 15 * 3600 + 02 * 60; // Start time in UTC
+  const starttime = 15 * 3600 + 2 * 60; // Start time in UTC
   let seconds = date.getSeconds();
   let mins = date.getMinutes() * 60;
   let hours = date.getHours() * 3600;

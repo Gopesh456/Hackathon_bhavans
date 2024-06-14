@@ -15,25 +15,31 @@
     </div>
     <script>
       $(document).ready(function () {
-        setInterval(function () {
-          $.ajax({
-            type: "GET",
-            url: "{% url 'getAns' %}",
-            success: function (response) {
-              //   console.log(response.ans);
-              $(".answer-el").empty();
-              for (key in response.ans) {
-                // console.log(response.ans[key].username);
-                if (response.ans[key].qno == {{pk}}){
-                    let temp = "<li>" +"<a href=" + "/answer/"+response.ans[key].id+'>' + "Username: "+ response.ans[key].username + " Question No: "+response.ans[key].qno+ "</a>"+"</li>";
-                    $(".answer-el").prepend(temp);}
-              }
-            },
-            error: function (response) {
-              alert("Error Occured ");
-            },
-          });
-        }, 1000);
+        $.ajax({
+          type: "GET",
+          url: "{% url 'getAns' %}",
+          success: function (response) {
+            //   console.log(response.ans);
+            $(".answer-el").empty();
+            for (key in response.ans) {
+              console.log(response.ans[key].qno);
+              let temp =
+                "<li>" +
+                "<a href=" +
+                "/answer/" +
+                response.ans[key].qno +
+                ">" +
+                "Question No: " +
+                response.ans[key].qno +
+                "</a>" +
+                "</li>";
+              $(".answer-el").prepend(temp);
+            }
+          },
+          error: function (response) {
+            alert("Error Occured ");
+          },
+        });
       });
     </script>
   </body>

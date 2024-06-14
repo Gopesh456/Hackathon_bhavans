@@ -139,6 +139,7 @@ function checkit(input) {
   return mypre.innerHTML;
 }
 function checkAns() {
+  
   let inputs = {
     q1_1: ['"()(()"'],
     q1_2: ['"(()))())("'],

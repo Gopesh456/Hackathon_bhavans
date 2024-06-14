@@ -5,7 +5,9 @@ import datetime
 class Questions(models.Model):
     qno = models.CharField(max_length = 2)
     question = models.TextField()
-    ans = models.TextField(null = True, blank = True)
+    ans1 = models.TextField(null = True, blank = True)
+    ans2 = models.TextField(null = True, blank = True)
+    ans3 = models.TextField(null = True, blank = True)
 
     def __str__(self):
         return" Question No: "+ str(self.qno)
