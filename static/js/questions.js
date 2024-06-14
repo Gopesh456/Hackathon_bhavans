@@ -139,7 +139,6 @@ function checkit(input) {
   return mypre.innerHTML;
 }
 function checkAns() {
-  
   let inputs = {
     q1_1: ['"()(()"'],
     q1_2: ['"(()))())("'],
@@ -228,35 +227,36 @@ function checkAns() {
 }
 
 function checkAnswer() {
-  let ans = checkAns();
-  let correct = [
-    ["2\n", "4\n", "4\n"],
-    ["CBBABBC\n", "avajava\n", "lol\n"],
-    [
-      "[[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]\n",
-      "[[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 1, 3], [2, 4, 3, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 2, 1, 4], [3, 2, 4, 1], [3, 4, 1, 2], [3, 4, 2, 1], [4, 1, 2, 3], [4, 1, 3, 2], [4, 2, 1, 3], [4, 2, 3, 1], [4, 3, 1, 2], [4, 3, 2, 1]]\n",
-      "[[3, 4], [4, 3]]\n",
-    ],
-    ["I\n", "XLIV\n", "MCMXCIV\n"],
-    ["3\n", "0\n", "2\n"],
-    ["True\n", "False\n", "False\n"],
-    ["[[1], [4], [-1]]\n", "[[4], [-1], [-3]]\n", "[[-4], [1], [-3]]\n"],
-    ["123\n", "3241\n", "54321\n"],
-    ["True\n", "False\n", "True\n"],
-    ["9\n", "001122\n", "445\n"],
-  ];
-  if (JSON.stringify(ans) === JSON.stringify(correct[questionNo - 1])) {
-    return "Correct";
-  } else {
-    return "Incorrect";
-  }
+  return new Promise((resolve, reject) => {
+    let ans = checkAns();
+    $.ajax({
+      type: "GET",
+      url: "/getAns",
+      success: function (response) {
+        ans1 = response.ans[questionNo - 1].ans1;
+        ans2 = response.ans[questionNo - 1].ans2;
+        ans3 = response.ans[questionNo - 1].ans3;
+        let Correctans = [ans1 + "\n", ans2 + "\n", ans3 + "\n"];
+        console.log(Correctans);
+        if (JSON.stringify(ans) === JSON.stringify(Correctans)) {
+          console.log("Correct");
+          resolve("Correct");
+        } else {
+          resolve("Incorrect");
+        }
+      },
+      error: function (error) {
+        reject(error);
+      },
+    });
+  });
 }
 function saveCodeSubmit() {
   localStorage[savefile] = editor.getValue();
   window.alert("Submit code!");
 }
-function sendResult() {
-  var value = checkAnswer();
+async function sendResult() {
+  var value = await checkAnswer(); // "Correct" or "Incorrect"
   var userCode = editor.getValue();
   var csrftoken = "{{ csrf_token }}";
   const requestObj = new XMLHttpRequest();
